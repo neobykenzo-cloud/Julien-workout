@@ -14,25 +14,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0A1D27;
-  --bg-2:#0E2531;
-  --surface:#123240;
-  --surface-2:#1A3F4E;
-  --line: rgba(242,236,222,0.10);
-  --text:#F2ECDE;
-  --text-dim:#93ACB6;
-  --text-faint:#5E7982;
-  --effort:#E8A33D;
-  --effort-dim: rgba(232,163,61,0.16);
-  --recovery:#4FA3A0;
-  --recovery-dim: rgba(79,163,160,0.16);
-  --steady:#CC7A45;
-  --steady-dim: rgba(204,122,69,0.16);
-  --neutral:#7D93A6;
-  --neutral-dim: rgba(125,147,166,0.14);
-  --technique:#8AA6C1;
-  --technique-dim: rgba(138,166,193,0.14);
-  --danger:#D65A4A;
+  --bg:#0A0A0C;
+  --bg-2:#131318;
+  --surface:#1A1A1F;
+  --surface-2:#242429;
+  --line: rgba(230,230,235,0.09);
+  --text:#F2F2F0;
+  --text-dim:#9A9AA3;
+  --text-faint:#5C5C66;
+  --effort:#C5F542;
+  --effort-dim: rgba(197,245,66,0.16);
+  --recovery:#35D7E0;
+  --recovery-dim: rgba(53,215,224,0.16);
+  --steady:#FF3D81;
+  --steady-dim: rgba(255,61,129,0.16);
+  --neutral:#7A7A85;
+  --neutral-dim: rgba(122,122,133,0.14);
+  --technique:#4D8FFF;
+  --technique-dim: rgba(77,143,255,0.14);
+  --danger:#FF3B3B;
   --radius: 20px;
   --radius-sm: 12px;
   --font-display:'Space Grotesk', sans-serif;
@@ -79,7 +79,7 @@ body{
   -webkit-user-select:none; user-select:none;
 }
 .btn:active{transform:scale(0.97);}
-.btn-primary{background:var(--effort); color:#241505;}
+.btn-primary{background:var(--effort); color:#0A0A0C;}
 .btn-primary:hover{filter:brightness(1.06);}
 .btn-secondary{background:var(--surface-2); color:var(--text); border:1px solid var(--line);}
 .btn-ghost{background:transparent; color:var(--text-dim); border:1px solid var(--line);}
@@ -88,13 +88,6 @@ body{
 .btn-row .btn{flex:1;}
 
 /* ---------- header / home ---------- */
-.top-row{display:flex; gap:8px; align-items:center; margin-bottom:22px; flex-wrap:wrap;}
-.stat-pill{
-  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
-  background:var(--surface); border:1px solid var(--line); border-radius:100px;
-  padding:6px 12px; display:flex; align-items:center; gap:6px;
-}
-.stat-pill b{color:var(--text); font-weight:600;}
 
 .date-block{margin-bottom:18px;}
 .date-label{font-family:var(--font-display); font-size:15px; color:var(--text-dim); text-transform:capitalize;}
@@ -183,17 +176,23 @@ body{
 .ring-wrap{display:flex; justify-content:center; padding:10px 20px 0;}
 .ring-inner{position:relative; width:min(50vw, 210px); height:min(50vw, 210px);}
 .ring-svg{width:100%; height:100%; display:block;}
-.ring-speed{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none;
+.rs-val{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none;
+  font-family:var(--font-mono); font-weight:700; font-size:min(13vw,52px); color:var(--text); line-height:1;
 }
-.ring-speed .rs-val{font-family:var(--font-mono); font-weight:700; font-size:min(13vw,52px); color:var(--text); line-height:1;}
-.ring-speed .rs-unit{font-family:var(--font-mono); font-size:min(3vw,12px); color:#fff; letter-spacing:0.14em; text-transform:uppercase; margin-top:7px;}
+.rs-unit{
+  position:absolute; top:calc(50% + 30px); left:50%; transform:translateX(-50%); pointer-events:none;
+  font-family:var(--font-mono); font-size:min(3vw,12px); color:#fff; letter-spacing:0.16em; text-transform:uppercase;
+}
 
 .timer-body{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 24px;}
-.rep-counter{font-family:var(--font-mono); font-size:16px; color:var(--text-dim); margin-bottom:14px; letter-spacing:0.04em;}
+.phase-name{
+  font-family:var(--font-mono); font-weight:700; font-size:min(10vw,38px); color:var(--text);
+  text-transform:uppercase; letter-spacing:0.02em; text-align:center; margin-bottom:14px;
+}
 .big-clock{
-  font-family:var(--font-mono); font-weight:700; font-size:min(22vw, 128px); line-height:1;
-  letter-spacing:-0.02em; font-variant-numeric: tabular-nums; margin-top:18px;
+  font-family:var(--font-mono); font-weight:700; font-size:min(18vw, 106px); line-height:1;
+  letter-spacing:-0.02em; font-variant-numeric: tabular-nums; margin-top:16px;
 }
 .now-next-row{display:flex; align-items:flex-end; gap:min(9vw,36px);}
 .nn-col{text-align:center;}
@@ -202,8 +201,8 @@ body{
   text-transform:uppercase; margin-bottom:4px;
 }
 .nn-value{font-family:var(--font-mono); font-weight:700; line-height:1;}
-.nn-col.now .nn-value{color: var(--nn-color, var(--text)); font-size:min(24vw, 100px);}
-.nn-col.next .nn-value{color:var(--text-dim); opacity:0.75; font-size:min(12vw, 46px);}
+.nn-col.now .nn-value{color: var(--nn-color, var(--text)); font-size:min(19vw, 82px);}
+.nn-col.next .nn-value{color:var(--text-dim); opacity:0.75; font-size:min(10vw, 38px);}
 
 .countdown-circle{
   width:min(78vw, 340px); height:min(78vw, 340px); border-radius:50%;
@@ -216,13 +215,13 @@ body{
   font-family:var(--font-display); font-weight:700; font-size:min(7vw, 30px); color:#fff;
   text-transform:uppercase; letter-spacing:0.06em;
 }
-.splash-incline{display:flex; flex-direction:column; align-items:center; gap:10px;}
+.splash-incline{display:flex; flex-direction:column; align-items:center; gap:12px;}
+.splash-phase-name{
+  font-family:var(--font-mono); font-weight:700; font-size:min(13vw,52px); line-height:1;
+  text-transform:uppercase; letter-spacing:0.02em; text-align:center;
+}
 .splash-value{
   font-family:var(--font-mono); font-weight:700; font-size:min(24vw, 118px); color:#fff; line-height:1;
-}
-.splash-label{
-  font-family:var(--font-display); font-weight:700; font-size:min(7.5vw, 32px); color:#fff;
-  text-transform:uppercase; letter-spacing:0.06em;
 }
 
 /* ---------- confirm overlay ---------- */
@@ -249,13 +248,23 @@ body{
 .upcoming-name{font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .upcoming-meta{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:1px;}
 .upcoming-chevron{color:var(--text-faint); font-size:14px;}
-.preview-banner{
-  display:flex; align-items:center; gap:10px; background:var(--surface-2); border:1px solid var(--line);
-  border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+.day-nav{
+  display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:14px;
 }
-.preview-banner button{
-  margin-left:auto; background:none; border:1px solid var(--line); color:var(--text); border-radius:100px;
-  padding:5px 12px; font-family:var(--font-body); font-size:12px; cursor:pointer;
+.day-nav-label{
+  flex:1; text-align:center; font-family:var(--font-mono); font-size:13px; color:var(--text-dim);
+  padding:0 10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.nav-arrow{
+  background:var(--surface); border:1px solid var(--line); color:var(--text); border-radius:50%;
+  width:42px; height:42px; flex-shrink:0; font-size:24px; font-weight:700; line-height:1; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; padding:0;
+}
+.nav-arrow:active{background:var(--surface-2);}
+.day-nav-back{display:flex; justify-content:center; margin:-4px 0 18px;}
+#backHomeBtn{
+  background:none; border:1px solid var(--line); color:var(--text); border-radius:100px;
+  padding:5px 14px; font-family:var(--font-body); font-size:12px; cursor:pointer;
 }
 
 .timer-controls{padding:20px 24px 30px; display:flex; gap:12px;}
@@ -311,8 +320,8 @@ function repeat(reps, effort, recovery){
 function effortStep(min, speed, incline, label){ return {duration:min*60, speed, incline, type:'effort', label: label || 'Effort'}; }
 function recoveryStep(min, speed, incline, label){ return {duration:min*60, speed, incline, type:'recovery', label: label || 'Récupération'}; }
 
-function session(title, kind, kcal, totalMin, segments){
-  return {title, kind, kcal, totalMin, segments};
+function session(title, kind, totalMin, segments){
+  return {title, kind, totalMin, segments};
 }
 
 /* ---------- kind -> colors / labels ---------- */
@@ -338,109 +347,111 @@ const STEP_TYPE_LABEL = {
    ========================================================================= */
 
 // ---- Bloc 1 : Construction (29 juin -> 12 juillet) ----
-const b1_intervalles = session("Intervalles 10% / 5%", 'effort', 380, 50, [
+const b1_intervalles = session("Intervalles 10% / 5%", 'effort', 50, [
   simple(5, 4.5, 0, 'warmup'),
   repeat(8, effortStep(3, 5.2, 10), recoveryStep(2, 5.2, 5)),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b1_continu_s2 = session("Continu 6%", 'steady', 290, 35, [
+const b1_continu_s2 = session("Continu 6%", 'steady', 35, [
   simple(5, 4.5, 0, 'warmup'),
   simple(25, 5.2, 6, 'steady', 'Allure constante'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b1_continu_s3 = session("Continu 7%", 'steady', 330, 40, [
+const b1_continu_s3 = session("Continu 7%", 'steady', 40, [
   simple(5, 4.5, 0, 'warmup'),
   simple(30, 5.2, 7, 'steady', 'Allure constante'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b1_technique = session("Technique légère", 'technique', 110, 20, [
+const b1_technique = session("Technique légère", 'technique', 28, [
   simple(5, 4, 0, 'warmup'),
-  simple(12, 4, 3, 'technique', 'Technique — jambes qui tournent'),
-  simple(3, 3.5, 0, 'cooldown'),
+  simple(20, 4, 4, 'technique', 'Technique — jambes qui tournent'),
+  simple(3, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 2 : Intensification (13 juillet -> 9 août) ----
-const b2_intervalles_45 = session("Intervalles 12% / 5%", 'effort', 430, 52, [
+const b2_intervalles_45 = session("Intervalles 12% / 5%", 'effort', 52, [
   simple(5, 4.5, 0, 'warmup'),
-  repeat(8, effortStep(3, 5.2, 12), recoveryStep(2, 5.2, 5)),
+  repeat(8, effortStep(3, 5, 12), recoveryStep(2, 5, 5)),
   simple(7, 4, 0, 'cooldown'),
 ]);
-const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 460, 57, [
+const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 57, [
   simple(5, 4.5, 0, 'warmup'),
-  repeat(9, effortStep(3, 5.2, 12), recoveryStep(2, 5.2, 5)),
+  repeat(9, effortStep(3, 5, 12), recoveryStep(2, 5, 5)),
   simple(7, 4, 0, 'cooldown'),
 ]);
-const b2_continu_45 = session("Continu 8%", 'steady', 380, 50, [
+const b2_continu_45 = session("Continu 8%", 'steady', 50, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(40, 5.2, 8, 'steady', 'Allure constante et soutenue'),
+  simple(40, 5, 8, 'steady', 'Allure constante et soutenue'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b2_continu_67 = session("Continu 8%", 'steady', 410, 55, [
+const b2_continu_67 = session("Continu 8%", 'steady', 55, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(45, 5.2, 8, 'steady', 'Allure constante et soutenue'),
+  simple(45, 5, 8, 'steady', 'Allure constante et soutenue'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b2_technique = session("Technique légère", 'technique', 140, 25, [
+const b2_technique = session("Technique légère", 'technique', 29, [
   simple(5, 4, 0, 'warmup'),
-  simple(16, 4.5, 3.5, 'technique', 'Technique — confortable (3–4%)'),
-  simple(4, 3.5, 0, 'cooldown'),
+  simple(20, 4, 4, 'technique', 'Technique — confortable'),
+  simple(4, 4, 0, 'cooldown'),
+]);
+
+// ---- Semaine de décharge (3 -> 9 août), avant le Bloc 3 ----
+const deload_intervalles = session("Intervalles décharge 8% / 5%", 'effort', 35, [
+  simple(5, 4.5, 0, 'warmup'),
+  repeat(5, effortStep(3, 5, 8), recoveryStep(2, 5, 5)),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const deload_continu = session("Continu décharge 6%", 'steady', 35, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(25, 5, 6, 'steady', 'Allure tranquille'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 3 : Pic (10 août -> 23 août) ----
-const b3_intervalles_s8 = session("Intervalles 15% / 5%", 'effort', 490, 52, [
+const b3_intervalles_s8 = session("Intervalles 15% / 5%", 'effort', 52, [
   simple(5, 5, 0, 'warmup'),
-  repeat(8, effortStep(3, 5.2, 15), recoveryStep(2, 5.2, 5)),
+  repeat(8, effortStep(3, 5, 15), recoveryStep(2, 5, 5)),
   simple(7, 4, 0, 'cooldown'),
 ]);
-const b3_intervalles_s9 = session("Intervalles 15% / 5%", 'effort', 530, 57, [
+const b3_intervalles_s9 = session("Intervalles 15% / 5%", 'effort', 57, [
   simple(5, 5, 0, 'warmup'),
-  repeat(9, effortStep(3, 5.2, 15), recoveryStep(2, 5.2, 5)),
+  repeat(9, effortStep(3, 5, 15), recoveryStep(2, 5, 5)),
   simple(7, 4, 0, 'cooldown'),
 ]);
-const b3_continu_s8 = session("Continu 9%", 'steady', 440, 50, [
+const b3_continu_s8 = session("Continu 9%", 'steady', 50, [
   simple(5, 5, 0, 'warmup'),
-  simple(40, 5.2, 9, 'steady', 'Effort long et régulier'),
+  simple(40, 5, 9, 'steady', 'Effort long et régulier'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b3_continu_s9 = session("Continu 10%", 'steady', 460, 50, [
+const b3_continu_s9 = session("Continu 10%", 'steady', 50, [
   simple(5, 5, 0, 'warmup'),
-  simple(40, 5.2, 10, 'steady', 'Point culminant du programme'),
+  simple(40, 5, 10, 'steady', 'Point culminant du programme'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b3_technique = session("Technique légère", 'technique', 150, 25, [
+const b3_technique = session("Technique légère", 'technique', 29, [
   simple(5, 4, 0, 'warmup'),
-  simple(16, 4.5, 4, 'technique', 'Technique — confortable'),
-  simple(4, 3.5, 0, 'cooldown'),
+  simple(20, 4, 4, 'technique', 'Technique — confortable'),
+  simple(4, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 4 : Pré-croisière (24 -> 29 août), séances fixes par date ----
-const b4_decharge_jeu = session("Décharge légère", 'technique', 115, 20, [
+const b4_decharge_jeu = session("Décharge légère", 'technique', 20, [
   simple(5, 4.5, 0, 'warmup'),
   simple(12, 4.5, 4, 'technique', 'Décharge'),
   simple(3, 4, 0, 'cooldown'),
 ]);
-const b4_decharge_ven = session("Décharge légère", 'technique', 95, 20, [
-  simple(5, 4, 0, 'warmup'),
-  simple(12, 4, 3, 'technique', 'Décharge'),
-  simple(3, 4, 0, 'cooldown'),
-]);
-const b4_symbolique = session("Séance symbolique", 'technique', 55, 15, [
-  simple(5, 4, 0, 'warmup'),
-  simple(8, 4, 2, 'technique', 'Symbolique — bagages + vol ce soir'),
-  simple(2, 4, 0, 'cooldown'),
-]);
 
 // ---- Croisière MSC Armonia (30 août -> 6 sept) ----
-const cruise_standard = session("Standard croisière", 'effort', 350, 45, [
+const cruise_standard = session("Standard croisière", 'effort', 45, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(20, 5, 7, 'steady', 'Allure de croisière'),
-  simple(10, 5, 10, 'effort', 'Pic — brûler davantage'),
-  simple(5, 5, 7, 'steady', 'Retour allure modérée'),
+  simple(18, 5, 8, 'steady', 'Allure de croisière'),
+  simple(12, 5, 11, 'effort', 'Pic — brûler davantage'),
+  simple(5, 5, 8, 'steady', 'Retour allure modérée'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const cruise_variante = session("Variante jambes chargées", 'technique', 250, 45, [
+const cruise_variante = session("Variante jambes chargées", 'technique', 45, [
   simple(5, 4, 0, 'warmup', 'Échauffement doux'),
-  simple(35, 4.5, 5, 'technique', 'Allure légère — récupération active'),
+  simple(35, 5, 6, 'technique', 'Allure légère — récupération active'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 
@@ -494,14 +505,16 @@ function resolveDay(date){
     };
   }
 
-  // Bloc 4 — dates fixes
+  // Bloc 4 — dates fixes : semaine de décharge complète avant la croisière
+  if (t === "2026-08-29"){
+    return {state:'rest', block: blockLabel(4), reason: "Journée chargée avant le vol — pas de séance, profite-en pour finaliser tes bagages."};
+  }
   const b4 = {
-    "2026-08-24": {title:"Lundi — Intervalles (Bloc 3)", s: b3_intervalles_s9},
-    "2026-08-25": {title:"Mardi — Continu (Bloc 3)", s: b3_continu_s9},
-    "2026-08-26": {title:"Mercredi — Intervalles (Bloc 3)", s: b3_intervalles_s9},
+    "2026-08-24": {title:"Lundi — Décharge", s: b4_decharge_jeu},
+    "2026-08-25": {title:"Mardi — Décharge", s: b4_decharge_jeu},
+    "2026-08-26": {title:"Mercredi — Décharge", s: b4_decharge_jeu},
     "2026-08-27": {title:"Jeudi — Décharge", s: b4_decharge_jeu},
-    "2026-08-28": {title:"Vendredi — Décharge", s: b4_decharge_ven},
-    "2026-08-29": {title:"Samedi — Symbolique", s: b4_symbolique},
+    "2026-08-28": {title:"Vendredi — Décharge", s: b4_decharge_jeu},
   };
   if (b4[t]){
     return {state:'session', block: blockLabel(4), session: b4[t].s};
@@ -515,6 +528,14 @@ function resolveDay(date){
       const isWeek3 = t >= "2026-07-06";
       return {state:'session', block: blockLabel(1), session: isWeek3 ? b1_continu_s3 : b1_continu_s2};
     }
+  }
+
+  // Semaine de décharge : 3 -> 9 août (avant le Bloc 3)
+  if (inRange(date, "2026-08-03", "2026-08-09")){
+    const deloadBlock = "Semaine de décharge · avant le Bloc 3";
+    if (dow === SUNDAY) return {state:'session', block: deloadBlock, session: b2_technique};
+    if (INTERVAL_DAYS.includes(dow)) return {state:'session', block: deloadBlock, session: deload_intervalles};
+    if (CONTINU_DAYS.includes(dow)) return {state:'session', block: deloadBlock, session: deload_continu};
   }
 
   // Bloc 2 : 13 juillet -> 9 août
@@ -553,6 +574,29 @@ function flattenSession(sess){
     }
   });
   return steps;
+}
+
+/* =========================================================================
+   CALORIE CALCULATION — ACSM walking metabolic equation
+   VO2 (ml·kg⁻¹·min⁻¹) = 3.5 + 0.1×speed(m/min) + 1.8×speed(m/min)×grade
+   kcal/min = VO2 × poids(kg) / 1000 × 5  (≈5 kcal par litre d'O2 consommé)
+   ========================================================================= */
+const REFERENCE_WEIGHT_KG = 79.5;
+
+function stepKcal(speedKmh, inclinePercent, durationSec, weightKg){
+  const speedMPerMin = speedKmh * 1000 / 60;
+  const grade = inclinePercent / 100;
+  const vo2 = 3.5 + 0.1*speedMPerMin + 1.8*speedMPerMin*grade;
+  const kcalPerMin = (vo2 * weightKg * 5) / 1000;
+  return kcalPerMin * (durationSec/60);
+}
+
+function computeSessionKcal(sess, weightKg){
+  weightKg = weightKg || REFERENCE_WEIGHT_KG;
+  const steps = flattenSession(sess);
+  let total = 0;
+  steps.forEach(s=>{ total += stepKcal(s.speed, s.incline, s.duration, weightKg); });
+  return Math.round(total);
 }
 
 /* =========================================================================
@@ -628,35 +672,41 @@ function ringSVG(sess, currentIdx, stepElapsedSeconds){
    AUDIO + HAPTIC ALERT
    ========================================================================= */
 let audioCtx = null;
-function beep(freq, dur){
+function playTone(freq, dur, opts){
+  opts = opts || {};
+  const type = opts.type || 'triangle';
+  const peak = opts.peak !== undefined ? opts.peak : 0.3;
   try{
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const o = audioCtx.createOscillator();
     const g = audioCtx.createGain();
-    o.type = 'sine';
+    o.type = type;
     o.frequency.value = freq;
     const t0 = audioCtx.currentTime;
-    const release = Math.min(0.18, dur*0.25);
+    const attack = Math.min(0.06, dur*0.25);
+    const release = Math.min(0.35, dur*0.4);
     g.gain.setValueAtTime(0.0001, t0);
-    g.gain.exponentialRampToValueAtTime(0.4, t0 + 0.03);
-    g.gain.setValueAtTime(0.4, Math.max(t0 + 0.03, t0 + dur - release));
+    g.gain.exponentialRampToValueAtTime(peak, t0 + attack);
+    g.gain.setValueAtTime(peak, Math.max(t0 + attack, t0 + dur - release));
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
     o.connect(g); g.connect(audioCtx.destination);
     o.start(); o.stop(t0 + dur + 0.03);
   }catch(e){}
 }
 function countdownBeep(){
-  beep(720, 0.11);
+  playTone(740, 0.14, {type:'triangle', peak:0.26});
   if (navigator.vibrate) navigator.vibrate(50);
 }
 function transitionLongBeep(){
-  beep(820, 1.8);
+  // pleasant two-note chime (root + fifth), soft attack, long warm release
+  playTone(587, 1.7, {type:'triangle', peak:0.3});
+  playTone(880, 1.7, {type:'sine', peak:0.16});
   if (navigator.vibrate) navigator.vibrate(900);
 }
 function alertFinish(){
-  beep(660, 0.2);
-  setTimeout(()=>beep(880, 0.2), 220);
-  setTimeout(()=>beep(1320, 0.35), 440);
+  playTone(523, 0.28, {type:'triangle', peak:0.28});
+  setTimeout(()=>playTone(659, 0.28, {type:'triangle', peak:0.28}), 220);
+  setTimeout(()=>playTone(784, 0.5, {type:'triangle', peak:0.3}), 440);
   if (navigator.vibrate) navigator.vibrate([150,80,150,80,300]);
 }
 
@@ -681,15 +731,6 @@ function fmtClock(sec){
   return String(m).padStart(2,'0') + ":" + String(s).padStart(2,'0');
 }
 
-function daysPill(){
-  return `<div class="stat-pill"><b>J-${daysToCruise()}</b></div>`;
-}
-function daysToCruise(){
-  const cruise = dateFromYMD("2026-08-30");
-  const diff = Math.ceil((cruise - stripTime(currentDate)) / 86400000);
-  return diff > 0 ? diff : 0;
-}
-function stripTime(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
 
 function shortInfoLabel(info){
   if (info.state === 'session') return {name: info.session.title, kind: info.session.kind};
@@ -770,8 +811,8 @@ function legendHTML(){
 }
 
 function renderHome(previewDate){
-  const isPreview = !!previewDate;
   const viewDate = previewDate || currentDate;
+  const isToday = ymd(viewDate) === ymd(currentDate);
   const info = resolveDay(viewDate);
   let body = '';
 
@@ -805,17 +846,17 @@ function renderHome(previewDate){
         <div class="session-sub">${info.stopNote}</div>
         <div class="type-tag tag-rest">${info.block}</div>
       </div>
-      <div class="steps-title">${isPreview ? 'Deux options possibles' : 'Choisis ta séance de 17h30'}</div>
+      <div class="steps-title">${isToday ? 'Choisis ta séance de 17h30' : 'Deux options possibles'}</div>
     `;
     opts.forEach(o=>{
       const meta = KIND_META[o.session.kind];
       body += `
-        <div class="choice-card ${info.recommended===o.key?'recommended':''}" ${isPreview?'':`data-choice="${o.key}"`} style="${isPreview?'cursor:default;':''}">
+        <div class="choice-card ${info.recommended===o.key?'recommended':''}" data-choice="${o.key}">
           <div class="choice-head">
             <span class="choice-name">${o.key === 'standard' ? 'Standard' : 'Variante jambes chargées'}</span>
             ${info.recommended === o.key ? '<span class="choice-badge">Conseillée</span>' : ''}
           </div>
-          <div class="choice-meta">${o.session.totalMin} min · ~${o.session.kcal} kcal · ${meta.label}</div>
+          <div class="choice-meta">${o.session.totalMin} min · ${computeSessionKcal(o.session)} kcal · ${meta.label}</div>
         </div>`;
     });
   } else if (info.state === 'session'){
@@ -831,9 +872,9 @@ function renderHome(previewDate){
       <div class="profile-wrap">${profileSVG(sess)}${legendHTML()}</div>
       <div class="stats-row">
         <div class="stat"><div class="stat-val">${sess.totalMin}<span style="font-size:14px;color:var(--text-faint);"> min</span></div><div class="stat-label">Durée</div></div>
-        <div class="stat"><div class="stat-val">~${sess.kcal}</div><div class="stat-label">Kcal estimées</div></div>
+        <div class="stat"><div class="stat-val">${computeSessionKcal(sess)}</div><div class="stat-label">Kcal</div></div>
       </div>
-      ${isPreview ? '' : `<div style="margin-top:16px;"><button class="btn btn-primary" id="startBtn">Démarrer la séance</button></div>`}
+      <div style="margin-top:16px;"><button class="btn btn-primary" id="startBtn">${isToday ? 'Démarrer la séance' : 'Lancer cette séance'}</button></div>
       ${renderStepList(sess)}
     `;
   } else {
@@ -845,37 +886,74 @@ function renderHome(previewDate){
       </div>`;
   }
 
-  const topHTML = isPreview
-    ? `<div class="preview-banner">Aperçu · ${fmtDate(viewDate)}<button id="backHomeBtn">Aujourd'hui</button></div>`
-    : `<div class="top-row">${daysPill()}</div>`;
+  const topHTML = `
+    <div class="day-nav">
+      <button class="nav-arrow" id="prevDayBtn">‹</button>
+      <span class="day-nav-label">${isToday ? "Aujourd'hui" : fmtDate(viewDate)}</span>
+      <button class="nav-arrow" id="nextDayBtn">›</button>
+    </div>
+    ${isToday ? '' : `<div class="day-nav-back"><button id="backHomeBtn">Revenir à aujourd'hui</button></div>`}`;
 
   app.innerHTML = `
     ${topHTML}
     ${body}
-    ${isPreview ? '' : renderUpcoming(currentDate, 6)}
+    ${isToday ? renderUpcoming(currentDate, 6) : ''}
   `;
 
   const startBtn = document.getElementById('startBtn');
   if (startBtn){
-    startBtn.addEventListener('click', ()=> startSession(info.session));
-  }
-  if (!isPreview){
-    document.querySelectorAll('.choice-card').forEach(el=>{
-      el.addEventListener('click', ()=>{
-        const key = el.getAttribute('data-choice');
-        const opt = info.options.find(o=>o.key===key);
-        startSession(opt.session);
-      });
+    startBtn.addEventListener('click', ()=>{
+      if (isToday) startSession(info.session);
+      else showStartConfirm(info.session, viewDate);
     });
   }
+  document.querySelectorAll('.choice-card').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const key = el.getAttribute('data-choice');
+      const opt = info.options.find(o=>o.key===key);
+      if (isToday) startSession(opt.session);
+      else showStartConfirm(opt.session, viewDate);
+    });
+  });
   const backBtn = document.getElementById('backHomeBtn');
   if (backBtn){
     backBtn.addEventListener('click', ()=> renderHome());
+  }
+  const prevBtn = document.getElementById('prevDayBtn');
+  if (prevBtn){
+    prevBtn.addEventListener('click', ()=>{
+      renderHome(new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate()-1));
+    });
+  }
+  const nextBtn = document.getElementById('nextDayBtn');
+  if (nextBtn){
+    nextBtn.addEventListener('click', ()=>{
+      renderHome(new Date(viewDate.getFullYear(), viewDate.getMonth(), viewDate.getDate()+1));
+    });
   }
   document.querySelectorAll('.upcoming-row').forEach(el=>{
     el.addEventListener('click', ()=>{
       renderHome(dateFromYMD(el.getAttribute('data-date')));
     });
+  });
+}
+
+function showStartConfirm(sess, forDate){
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `
+    <div class="confirm-box">
+      <p>Ça n'est pas la séance prévue aujourd'hui.<br>Lancer tout de même ?</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="cancelStart">Annuler</button>
+        <button class="btn btn-primary" id="confirmStart">Lancer</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  document.getElementById('cancelStart').addEventListener('click', ()=> overlay.remove());
+  document.getElementById('confirmStart').addEventListener('click', ()=>{
+    overlay.remove();
+    startSession(sess);
   });
 }
 
@@ -893,7 +971,7 @@ function showQuitConfirm(){
       <p>Quitter la séance en cours ?</p>
       <div class="btn-row">
         <button class="btn btn-ghost" id="cancelQuit">Annuler</button>
-        <button class="btn" id="confirmQuit" style="background:var(--danger); color:#2A0F0C;">Quitter</button>
+        <button class="btn" id="confirmQuit" style="background:var(--danger); color:#0A0A0C;">Quitter</button>
       </div>
     </div>`;
   document.body.appendChild(overlay);
@@ -952,6 +1030,12 @@ function tick(){
   renderTimer();
 }
 
+function sessionRemainingSeconds(steps, idx, remaining){
+  let rem = remaining;
+  for (let i = idx+1; i < steps.length; i++) rem += steps[i].duration;
+  return rem;
+}
+
 function renderTimer(flash){
   const {sess, steps, idx, remaining, elapsed, stepElapsed, totalDuration, running} = timerState;
   const step = steps[idx];
@@ -959,6 +1043,10 @@ function renderTimer(flash){
   const color = STEP_TYPE_COLOR[step.type];
   const countdownActive = remaining >= 1 && remaining <= 5;
   const splashActive = stepElapsed < 5;
+  const countdownToEnd = sessionRemainingSeconds(steps, idx, remaining);
+  const phaseLabel = step.repIndex
+    ? `${STEP_TYPE_LABEL[step.type]} ${step.repIndex}/${step.repTotal}`
+    : STEP_TYPE_LABEL[step.type];
 
   let bodyHTML;
   if (countdownActive){
@@ -972,12 +1060,12 @@ function renderTimer(flash){
   } else if (splashActive){
     bodyHTML = `
       <div class="splash-incline">
+        <div class="splash-phase-name" style="color:${color}">${phaseLabel}</div>
         <div class="splash-value">${fmtIncline(step.incline)}</div>
-        <div class="splash-label">${STEP_TYPE_LABEL[step.type]}</div>
       </div>`;
   } else {
     bodyHTML = `
-      ${step.repIndex ? `<div class="rep-counter">Répétition ${step.repIndex} / ${step.repTotal}</div>` : ''}
+      <div class="phase-name">${phaseLabel}</div>
       <div class="now-next-row">
         <div class="nn-col now" style="--nn-color:${color}">
           <div class="nn-label">Now</div>
@@ -997,14 +1085,12 @@ function renderTimer(flash){
       <div class="timer-top">
         <div class="timer-close" id="closeBtn">✕</div>
       </div>
-      <div class="elapsed-clock-wrap"><div class="elapsed-clock">-${fmtClock(totalDuration - elapsed)}</div></div>
+      <div class="elapsed-clock-wrap"><div class="elapsed-clock">-${fmtClock(countdownToEnd)}</div></div>
       <div class="ring-wrap">
         <div class="ring-inner">
           ${ringSVG(sess, idx, stepElapsed)}
-          <div class="ring-speed">
-            <div class="rs-val">${fmtSpeedShort(step.speed)}</div>
-            <div class="rs-unit">KMH</div>
-          </div>
+          <div class="rs-val">${fmtSpeedShort(step.speed)}</div>
+          <div class="rs-unit">KMH</div>
         </div>
       </div>
       <div class="timer-body">${bodyHTML}</div>
@@ -1035,7 +1121,7 @@ function renderSummary(){
       <div class="summary-sub">${sess.title}</div>
       <div class="summary-stats">
         <div class="summary-stat"><div class="stat-val">${fmtClock(elapsed)}</div><div class="stat-label">Durée</div></div>
-        <div class="summary-stat"><div class="stat-val">~${sess.kcal}</div><div class="stat-label">Kcal</div></div>
+        <div class="summary-stat"><div class="stat-val">${computeSessionKcal(sess)}</div><div class="stat-label">Kcal</div></div>
       </div>
       <button class="btn btn-primary" id="doneBtn" style="max-width:280px; margin-top:26px;">Retour à l'accueil</button>
     </div>
