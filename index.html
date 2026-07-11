@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tapis Croisière">
+<meta name="theme-color" content="#0A1D27">
+<title>Programme Tapis — Croisière 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1D27;
+  --bg-2:#0E2531;
+  --surface:#123240;
+  --surface-2:#1A3F4E;
+  --line: rgba(242,236,222,0.10);
+  --text:#F2ECDE;
+  --text-dim:#93ACB6;
+  --text-faint:#5E7982;
+  --effort:#E8A33D;
+  --effort-dim: rgba(232,163,61,0.16);
+  --recovery:#4FA3A0;
+  --recovery-dim: rgba(79,163,160,0.16);
+  --steady:#CC7A45;
+  --steady-dim: rgba(204,122,69,0.16);
+  --neutral:#7D93A6;
+  --neutral-dim: rgba(125,147,166,0.14);
+  --technique:#8AA6C1;
+  --technique-dim: rgba(138,166,193,0.14);
+  --danger:#D65A4A;
+  --radius: 20px;
+  --radius-sm: 12px;
+  --font-display:'Space Grotesk', sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+  --font-body:'Inter', sans-serif;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+html,body{margin:0; padding:0; height:100%;}
+body{
+  background: radial-gradient(ellipse 120% 80% at 50% -10%, var(--bg-2), var(--bg) 60%);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+#app{max-width:560px; margin:0 auto; min-height:100vh; padding:22px 18px 48px; position:relative;}
+
+/* ---------- shared ---------- */
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin:0 0 6px;
+}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.btn{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:17px;
+  border:none;
+  border-radius:16px;
+  padding:18px 22px;
+  cursor:pointer;
+  width:100%;
+  transition: transform .12s ease, filter .12s ease;
+  -webkit-user-select:none; user-select:none;
+}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--effort); color:#241505;}
+.btn-primary:hover{filter:brightness(1.06);}
+.btn-secondary{background:var(--surface-2); color:var(--text); border:1px solid var(--line);}
+.btn-ghost{background:transparent; color:var(--text-dim); border:1px solid var(--line);}
+.btn-danger{background:transparent; color:var(--danger); border:1px solid rgba(214,90,74,0.4);}
+.btn-row{display:flex; gap:10px;}
+.btn-row .btn{flex:1;}
+
+/* ---------- header / home ---------- */
+.top-row{display:flex; gap:8px; align-items:center; margin-bottom:22px; flex-wrap:wrap;}
+.stat-pill{
+  font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+  background:var(--surface); border:1px solid var(--line); border-radius:100px;
+  padding:6px 12px; display:flex; align-items:center; gap:6px;
+}
+.stat-pill b{color:var(--text); font-weight:600;}
+
+.date-block{margin-bottom:18px;}
+.date-label{font-family:var(--font-display); font-size:15px; color:var(--text-dim); text-transform:capitalize;}
+.session-title{
+  font-family:var(--font-display); font-weight:700; font-size:34px; line-height:1.08;
+  margin:4px 0 2px; letter-spacing:-0.01em;
+}
+.session-sub{font-size:14px; color:var(--text-dim);}
+
+.type-tag{
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono);
+  font-size:11px; letter-spacing:0.06em; text-transform:uppercase; padding:5px 10px;
+  border-radius:100px; margin-top:10px;
+}
+.tag-effort{background:var(--effort-dim); color:var(--effort);}
+.tag-steady{background:var(--steady-dim); color:var(--steady);}
+.tag-technique{background:var(--technique-dim); color:var(--technique);}
+.tag-rest{background:var(--neutral-dim); color:var(--text-dim);}
+
+/* ---------- profile chart (signature element) ---------- */
+.profile-wrap{margin:20px 0 18px;}
+.profile-svg{width:100%; height:96px; display:block;}
+.profile-legend{display:flex; gap:16px; margin-top:8px; font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:0.04em;}
+.legend-dot{display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+
+/* ---------- stats row ---------- */
+.stats-row{display:flex; gap:10px; margin:18px 0;}
+.stat{flex:1; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 14px;}
+.stat-val{font-family:var(--font-display); font-size:22px; font-weight:700;}
+.stat-label{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;}
+
+/* ---------- step list ---------- */
+.steps-title{font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-faint); margin:22px 0 10px;}
+.step-row{
+  display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);
+}
+.step-row:last-child{border-bottom:none;}
+.step-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+.step-info{flex:1;}
+.step-label{font-size:14px; font-weight:500;}
+.step-meta{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); margin-top:2px;}
+.step-dur{font-family:var(--font-mono); font-size:13px; color:var(--text-faint);}
+
+/* ---------- choice buttons (cruise) ---------- */
+.choice-card{
+  border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:10px; cursor:pointer;
+  background:var(--surface); transition: border-color .15s ease, background .15s ease;
+}
+.choice-card:active{transform:scale(0.98);}
+.choice-card.recommended{border-color: var(--effort);}
+.choice-head{display:flex; justify-content:space-between; align-items:center;}
+.choice-name{font-family:var(--font-display); font-weight:700; font-size:18px;}
+.choice-badge{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--effort);}
+.choice-meta{font-size:13px; color:var(--text-dim); margin-top:4px;}
+
+/* ---------- empty / info states ---------- */
+.info-screen{min-height:70vh; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; text-align:left;}
+.info-icon{font-size:34px; margin-bottom:14px;}
+.info-title{font-family:var(--font-display); font-weight:700; font-size:26px; margin-bottom:8px;}
+.info-body{color:var(--text-dim); font-size:15px; line-height:1.5;}
+
+/* ---------- timer screen ---------- */
+.timer-screen{
+  position:fixed; inset:0; z-index:50; display:flex; flex-direction:column;
+  background: var(--bg);
+}
+.timer-screen.flash{animation: flashbg 0.5s ease;}
+@keyframes flashbg{
+  0%{background:var(--bg);}
+  30%{background: var(--flash-color, var(--effort));}
+  100%{background:var(--bg);}
+}
+.timer-top{padding:18px 20px 0; display:flex; justify-content:flex-end;}
+.timer-close{
+  width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:var(--surface);
+  color:var(--text-dim); display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer;
+}
+
+.elapsed-clock-wrap{display:flex; justify-content:center; padding-top:2px;}
+.elapsed-clock{
+  display:inline-flex; align-items:center; background:var(--surface-2); border:1px solid var(--line);
+  border-radius:100px; padding:8px 22px; font-family:var(--font-mono); font-weight:700;
+  font-size:min(8.5vw,34px); color:var(--text); letter-spacing:0.02em; font-variant-numeric:tabular-nums;
+}
+
+.ring-wrap{display:flex; justify-content:center; padding:10px 20px 0;}
+.ring-inner{position:relative; width:min(50vw, 210px); height:min(50vw, 210px);}
+.ring-svg{width:100%; height:100%; display:block;}
+.ring-speed{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none;
+}
+.ring-speed .rs-val{font-family:var(--font-mono); font-weight:700; font-size:min(13vw,52px); color:var(--text); line-height:1;}
+.ring-speed .rs-unit{font-family:var(--font-mono); font-size:min(3vw,12px); color:#fff; letter-spacing:0.14em; text-transform:uppercase; margin-top:7px;}
+
+.timer-body{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 24px;}
+.rep-counter{font-family:var(--font-mono); font-size:16px; color:var(--text-dim); margin-bottom:14px; letter-spacing:0.04em;}
+.big-clock{
+  font-family:var(--font-mono); font-weight:700; font-size:min(22vw, 128px); line-height:1;
+  letter-spacing:-0.02em; font-variant-numeric: tabular-nums; margin-top:18px;
+}
+.now-next-row{display:flex; align-items:flex-end; gap:min(9vw,36px);}
+.nn-col{text-align:center;}
+.nn-label{
+  font-family:var(--font-mono); font-size:min(3.6vw,13px); letter-spacing:0.14em; color:var(--text-faint);
+  text-transform:uppercase; margin-bottom:4px;
+}
+.nn-value{font-family:var(--font-mono); font-weight:700; line-height:1;}
+.nn-col.now .nn-value{color: var(--nn-color, var(--text)); font-size:min(24vw, 100px);}
+.nn-col.next .nn-value{color:var(--text-dim); opacity:0.75; font-size:min(12vw, 46px);}
+
+.countdown-circle{
+  width:min(78vw, 340px); height:min(78vw, 340px); border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+}
+.countdown-circle .cd-number{
+  font-family:var(--font-mono); font-weight:700; font-size:min(30vw, 150px); color:#fff; line-height:1;
+}
+.countdown-circle .cd-label{
+  font-family:var(--font-display); font-weight:700; font-size:min(7vw, 30px); color:#fff;
+  text-transform:uppercase; letter-spacing:0.06em;
+}
+.splash-incline{display:flex; flex-direction:column; align-items:center; gap:10px;}
+.splash-value{
+  font-family:var(--font-mono); font-weight:700; font-size:min(24vw, 118px); color:#fff; line-height:1;
+}
+.splash-label{
+  font-family:var(--font-display); font-weight:700; font-size:min(7.5vw, 32px); color:#fff;
+  text-transform:uppercase; letter-spacing:0.06em;
+}
+
+/* ---------- confirm overlay ---------- */
+.confirm-overlay{
+  position:fixed; inset:0; z-index:80; background:rgba(10,29,39,0.82);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.confirm-box{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:24px; max-width:320px; width:100%; text-align:center;
+}
+.confirm-box p{font-size:15px; margin:0 0 18px; color:var(--text);}
+
+/* ---------- upcoming days ---------- */
+.upcoming-title{font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-faint); margin:26px 0 10px;}
+.upcoming-list{display:flex; flex-direction:column; gap:1px; background:var(--line); border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--line);}
+.upcoming-row{
+  display:flex; align-items:center; gap:12px; padding:13px 16px; background:var(--surface); cursor:pointer;
+}
+.upcoming-row:active{background:var(--surface-2);}
+.upcoming-day{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); text-transform:uppercase; width:38px; flex-shrink:0;}
+.upcoming-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
+.upcoming-info{flex:1; min-width:0;}
+.upcoming-name{font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.upcoming-meta{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:1px;}
+.upcoming-chevron{color:var(--text-faint); font-size:14px;}
+.preview-banner{
+  display:flex; align-items:center; gap:10px; background:var(--surface-2); border:1px solid var(--line);
+  border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:18px; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);
+}
+.preview-banner button{
+  margin-left:auto; background:none; border:1px solid var(--line); color:var(--text); border-radius:100px;
+  padding:5px 12px; font-family:var(--font-body); font-size:12px; cursor:pointer;
+}
+
+.timer-controls{padding:20px 24px 30px; display:flex; gap:12px;}
+.timer-controls .btn{padding:20px;}
+
+/* ---------- summary ---------- */
+.summary-screen{
+  position:fixed; inset:0; z-index:60; display:flex; flex-direction:column; justify-content:center;
+  align-items:center; text-align:center; padding:30px; background: var(--bg);
+}
+.summary-emoji{font-size:44px; margin-bottom:6px;}
+.summary-title{font-family:var(--font-display); font-weight:700; font-size:28px; margin-bottom:6px;}
+.summary-sub{color:var(--text-dim); font-size:14px; margin-bottom:26px;}
+.summary-stats{display:flex; gap:14px; margin-bottom:34px;}
+.summary-stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 22px; min-width:110px;}
+.summary-stat .stat-val{font-size:26px;}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =========================================================================
+   PROGRAMME TAPIS — CROISIÈRE 2026
+   ========================================================================= */
+
+const DAY_NAMES = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+const MONTH_NAMES = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+
+function fmtDate(d){
+  return DAY_NAMES[d.getDay()] + " " + d.getDate() + " " + MONTH_NAMES[d.getMonth()];
+}
+function ymd(d){
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,'0')+"-"+String(d.getDate()).padStart(2,'0');
+}
+function dateFromYMD(s){
+  const [y,m,d] = s.split("-").map(Number);
+  return new Date(y, m-1, d);
+}
+function inRange(d, startYMD, endYMD){
+  const t = ymd(d);
+  return t >= startYMD && t <= endYMD;
+}
+
+/* ---------- segment builders ---------- */
+function simple(min, speed, incline, type, label){
+  return {kind:'simple', duration: min*60, speed, incline, type, label};
+}
+function repeat(reps, effort, recovery){
+  return {kind:'repeat', reps, steps:[effort, recovery]};
+}
+function effortStep(min, speed, incline, label){ return {duration:min*60, speed, incline, type:'effort', label: label || 'Effort'}; }
+function recoveryStep(min, speed, incline, label){ return {duration:min*60, speed, incline, type:'recovery', label: label || 'Récupération'}; }
+
+function session(title, kind, kcal, totalMin, segments){
+  return {title, kind, kcal, totalMin, segments};
+}
+
+/* ---------- kind -> colors / labels ---------- */
+const KIND_META = {
+  effort:   {color:'var(--effort)',   dim:'var(--effort-dim)',   label:'Intervalles'},
+  steady:   {color:'var(--steady)',   dim:'var(--steady-dim)',   label:'Continu'},
+  technique:{color:'var(--technique)',dim:'var(--technique-dim)',label:'Technique légère'},
+  rest:     {color:'var(--neutral)',  dim:'var(--neutral-dim)',  label:'Repos'}
+};
+const STEP_TYPE_COLOR = {
+  warmup:'var(--neutral)', cooldown:'var(--neutral)',
+  effort:'var(--effort)', recovery:'var(--recovery)',
+  steady:'var(--steady)', technique:'var(--technique)'
+};
+const STEP_TYPE_LABEL = {
+  warmup:'Échauffement', cooldown:'Retour au calme',
+  effort:'Effort', recovery:'Récupération',
+  steady:'Allure constante', technique:'Technique'
+};
+
+/* =========================================================================
+   ALL SESSION DEFINITIONS
+   ========================================================================= */
+
+// ---- Bloc 1 : Construction (29 juin -> 12 juillet) ----
+const b1_intervalles = session("Intervalles 10% / 5%", 'effort', 380, 50, [
+  simple(5, 4.5, 0, 'warmup'),
+  repeat(8, effortStep(3, 5.2, 10), recoveryStep(2, 5.2, 5)),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b1_continu_s2 = session("Continu 6%", 'steady', 290, 35, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(25, 5.2, 6, 'steady', 'Allure constante'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b1_continu_s3 = session("Continu 7%", 'steady', 330, 40, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(30, 5.2, 7, 'steady', 'Allure constante'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b1_technique = session("Technique légère", 'technique', 110, 20, [
+  simple(5, 4, 0, 'warmup'),
+  simple(12, 4, 3, 'technique', 'Technique — jambes qui tournent'),
+  simple(3, 3.5, 0, 'cooldown'),
+]);
+
+// ---- Bloc 2 : Intensification (13 juillet -> 9 août) ----
+const b2_intervalles_45 = session("Intervalles 12% / 5%", 'effort', 430, 52, [
+  simple(5, 4.5, 0, 'warmup'),
+  repeat(8, effortStep(3, 5.2, 12), recoveryStep(2, 5.2, 5)),
+  simple(7, 4, 0, 'cooldown'),
+]);
+const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 460, 57, [
+  simple(5, 4.5, 0, 'warmup'),
+  repeat(9, effortStep(3, 5.2, 12), recoveryStep(2, 5.2, 5)),
+  simple(7, 4, 0, 'cooldown'),
+]);
+const b2_continu_45 = session("Continu 8%", 'steady', 380, 50, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(40, 5.2, 8, 'steady', 'Allure constante et soutenue'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b2_continu_67 = session("Continu 8%", 'steady', 410, 55, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(45, 5.2, 8, 'steady', 'Allure constante et soutenue'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b2_technique = session("Technique légère", 'technique', 140, 25, [
+  simple(5, 4, 0, 'warmup'),
+  simple(16, 4.5, 3.5, 'technique', 'Technique — confortable (3–4%)'),
+  simple(4, 3.5, 0, 'cooldown'),
+]);
+
+// ---- Bloc 3 : Pic (10 août -> 23 août) ----
+const b3_intervalles_s8 = session("Intervalles 15% / 5%", 'effort', 490, 52, [
+  simple(5, 5, 0, 'warmup'),
+  repeat(8, effortStep(3, 5.2, 15), recoveryStep(2, 5.2, 5)),
+  simple(7, 4, 0, 'cooldown'),
+]);
+const b3_intervalles_s9 = session("Intervalles 15% / 5%", 'effort', 530, 57, [
+  simple(5, 5, 0, 'warmup'),
+  repeat(9, effortStep(3, 5.2, 15), recoveryStep(2, 5.2, 5)),
+  simple(7, 4, 0, 'cooldown'),
+]);
+const b3_continu_s8 = session("Continu 9%", 'steady', 440, 50, [
+  simple(5, 5, 0, 'warmup'),
+  simple(40, 5.2, 9, 'steady', 'Effort long et régulier'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b3_continu_s9 = session("Continu 10%", 'steady', 460, 50, [
+  simple(5, 5, 0, 'warmup'),
+  simple(40, 5.2, 10, 'steady', 'Point culminant du programme'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const b3_technique = session("Technique légère", 'technique', 150, 25, [
+  simple(5, 4, 0, 'warmup'),
+  simple(16, 4.5, 4, 'technique', 'Technique — confortable'),
+  simple(4, 3.5, 0, 'cooldown'),
+]);
+
+// ---- Bloc 4 : Pré-croisière (24 -> 29 août), séances fixes par date ----
+const b4_decharge_jeu = session("Décharge légère", 'technique', 115, 20, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(12, 4.5, 4, 'technique', 'Décharge'),
+  simple(3, 4, 0, 'cooldown'),
+]);
+const b4_decharge_ven = session("Décharge légère", 'technique', 95, 20, [
+  simple(5, 4, 0, 'warmup'),
+  simple(12, 4, 3, 'technique', 'Décharge'),
+  simple(3, 4, 0, 'cooldown'),
+]);
+const b4_symbolique = session("Séance symbolique", 'technique', 55, 15, [
+  simple(5, 4, 0, 'warmup'),
+  simple(8, 4, 2, 'technique', 'Symbolique — bagages + vol ce soir'),
+  simple(2, 4, 0, 'cooldown'),
+]);
+
+// ---- Croisière MSC Armonia (30 août -> 6 sept) ----
+const cruise_standard = session("Standard croisière", 'effort', 350, 45, [
+  simple(5, 4.5, 0, 'warmup'),
+  simple(20, 5, 7, 'steady', 'Allure de croisière'),
+  simple(10, 5, 10, 'effort', 'Pic — brûler davantage'),
+  simple(5, 5, 7, 'steady', 'Retour allure modérée'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+const cruise_variante = session("Variante jambes chargées", 'technique', 250, 45, [
+  simple(5, 4, 0, 'warmup', 'Échauffement doux'),
+  simple(35, 4.5, 5, 'technique', 'Allure légère — récupération active'),
+  simple(5, 4, 0, 'cooldown'),
+]);
+
+/* =========================================================================
+   SCHEDULE RESOLUTION
+   ========================================================================= */
+
+const PROGRAM_START = "2026-06-29";
+const PROGRAM_END   = "2026-09-06";
+
+// weekday groups
+const INTERVAL_DAYS = [1,3,5];   // lun/mer/ven
+const CONTINU_DAYS  = [2,4,6];   // mar/jeu/sam
+const SUNDAY = 0;
+
+function blockLabel(n){
+  return ["Bloc 1 · Construction","Bloc 2 · Intensification","Bloc 3 · Pic","Bloc 4 · Pré-croisière","Croisière MSC Armonia"][n-1];
+}
+
+function resolveDay(date){
+  const t = ymd(date);
+  const dow = date.getDay();
+
+  if (t < PROGRAM_START){
+    return {state:'before'};
+  }
+  if (t > PROGRAM_END){
+    return {state:'after'};
+  }
+
+  // Croisière
+  if (t >= "2026-08-30" && t <= "2026-09-06"){
+    if (t === "2026-08-30" || t === "2026-09-06"){
+      return {state:'rest', block: blockLabel(5), reason: t === "2026-08-30" ? "Embarquement à Venise — installation à bord." : "Débarquement à Venise, journée libre, vol vers Alicante le soir."};
+    }
+    const stops = {
+      "2026-08-31": {name:"En mer", note:"Journée libre à bord.", reco:'standard'},
+      "2026-09-01": {name:"Dubrovnik (Croatie)", note:"Remparts historiques — beaucoup de marche et de montée.", reco:'variante'},
+      "2026-09-02": {name:"Corfou (Grèce)", note:"Vieille ville et plages, balade assez plate.", reco:'standard'},
+      "2026-09-03": {name:"Kotor (Monténégro)", note:"Baie magnifique — remparts en option (montée intense).", reco:'variante'},
+      "2026-09-04": {name:"Brindisi / Lecce (Italie)", note:"Visite de Lecce à pied, ~4–5 km au centre historique.", reco:'variante'},
+      "2026-09-05": {name:"Split (Croatie)", note:"Palais de Dioclétien — au choix selon le rythme du groupe.", reco:'either'},
+    };
+    const stop = stops[t];
+    return {
+      state:'choice', block: blockLabel(5), stopName: stop.name, stopNote: stop.note, recommended: stop.reco,
+      options: [
+        {key:'standard', session: cruise_standard},
+        {key:'variante', session: cruise_variante},
+      ]
+    };
+  }
+
+  // Bloc 4 — dates fixes
+  const b4 = {
+    "2026-08-24": {title:"Lundi — Intervalles (Bloc 3)", s: b3_intervalles_s9},
+    "2026-08-25": {title:"Mardi — Continu (Bloc 3)", s: b3_continu_s9},
+    "2026-08-26": {title:"Mercredi — Intervalles (Bloc 3)", s: b3_intervalles_s9},
+    "2026-08-27": {title:"Jeudi — Décharge", s: b4_decharge_jeu},
+    "2026-08-28": {title:"Vendredi — Décharge", s: b4_decharge_ven},
+    "2026-08-29": {title:"Samedi — Symbolique", s: b4_symbolique},
+  };
+  if (b4[t]){
+    return {state:'session', block: blockLabel(4), session: b4[t].s};
+  }
+
+  // Bloc 1 : 29 juin -> 12 juillet
+  if (inRange(date, "2026-06-29", "2026-07-12")){
+    if (dow === SUNDAY) return {state:'session', block: blockLabel(1), session: b1_technique};
+    if (INTERVAL_DAYS.includes(dow)) return {state:'session', block: blockLabel(1), session: b1_intervalles};
+    if (CONTINU_DAYS.includes(dow)){
+      const isWeek3 = t >= "2026-07-06";
+      return {state:'session', block: blockLabel(1), session: isWeek3 ? b1_continu_s3 : b1_continu_s2};
+    }
+  }
+
+  // Bloc 2 : 13 juillet -> 9 août
+  if (inRange(date, "2026-07-13", "2026-08-09")){
+    const isSem67 = t >= "2026-07-27";
+    if (dow === SUNDAY) return {state:'session', block: blockLabel(2), session: b2_technique};
+    if (INTERVAL_DAYS.includes(dow)) return {state:'session', block: blockLabel(2), session: isSem67 ? b2_intervalles_67 : b2_intervalles_45};
+    if (CONTINU_DAYS.includes(dow)) return {state:'session', block: blockLabel(2), session: isSem67 ? b2_continu_67 : b2_continu_45};
+  }
+
+  // Bloc 3 : 10 août -> 23 août
+  if (inRange(date, "2026-08-10", "2026-08-23")){
+    const isSem9 = t >= "2026-08-17";
+    if (dow === SUNDAY) return {state:'session', block: blockLabel(3), session: b3_technique};
+    if (INTERVAL_DAYS.includes(dow)) return {state:'session', block: blockLabel(3), session: isSem9 ? b3_intervalles_s9 : b3_intervalles_s8};
+    if (CONTINU_DAYS.includes(dow)) return {state:'session', block: blockLabel(3), session: isSem9 ? b3_continu_s9 : b3_continu_s8};
+  }
+
+  return {state:'unknown'};
+}
+
+/* =========================================================================
+   FLATTEN A SESSION INTO A LINEAR STEP LIST FOR THE TIMER
+   ========================================================================= */
+function flattenSession(sess){
+  const steps = [];
+  sess.segments.forEach(seg=>{
+    if (seg.kind === 'simple'){
+      steps.push({...seg});
+    } else if (seg.kind === 'repeat'){
+      for (let r=1; r<=seg.reps; r++){
+        seg.steps.forEach(s=>{
+          steps.push({...s, repIndex:r, repTotal:seg.reps});
+        });
+      }
+    }
+  });
+  return steps;
+}
+
+/* =========================================================================
+   PROFILE SVG (signature element)
+   ========================================================================= */
+function profileSVG(sess, opts){
+  opts = opts || {};
+  const steps = flattenSession(sess);
+  const totalDur = steps.reduce((a,s)=>a+s.duration,0);
+  const maxIncline = Math.max(2, ...steps.map(s=>s.incline));
+  const W = 1000, H = 96, baseY = H-14, topPad = 10;
+  let x = 0;
+  const bars = steps.map((s,i)=>{
+    const w = (s.duration/totalDur)*W;
+    const h = (s.incline/maxIncline) * (H - topPad - (H-baseY));
+    const barH = Math.max(h, 4);
+    const bar = {x, w, y: baseY-barH, h: barH, color: STEP_TYPE_COLOR[s.type], idx:i};
+    x += w;
+    return bar;
+  });
+  const activeIdx = opts.activeIndex;
+  const rects = bars.map(b=>
+    `<rect x="${b.x.toFixed(1)}" y="${b.y.toFixed(1)}" width="${Math.max(b.w-1.2,0.6).toFixed(1)}" height="${b.h.toFixed(1)}" rx="2" fill="${b.color}" opacity="${activeIdx!==undefined && b.idx!==activeIdx ? 0.35 : 1}"/>`
+  ).join('');
+  let marker = '';
+  if (opts.progressRatio !== undefined){
+    const mx = opts.progressRatio * W;
+    marker = `<line x1="${mx.toFixed(1)}" y1="0" x2="${mx.toFixed(1)}" y2="${H}" stroke="var(--text)" stroke-width="2" opacity="0.85"/>`;
+  }
+  return `<svg class="profile-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <line x1="0" y1="${baseY+0.5}" x2="${W}" y2="${baseY+0.5}" stroke="var(--line)" stroke-width="1"/>
+    ${rects}
+    ${marker}
+  </svg>`;
+}
+
+/* =========================================================================
+   RING PROGRESS SVG — whole-session donut, fills in as time elapses
+   ========================================================================= */
+function ringSVG(sess, currentIdx, stepElapsedSeconds){
+  const steps = flattenSession(sess);
+  const totalDur = steps.reduce((a,s)=>a+s.duration,0);
+  const R = 44, C = 2*Math.PI*R;
+  let acc = 0;
+  const parts = [];
+  steps.forEach((s,i)=>{
+    const lenFrac = s.duration/totalDur;
+    const startFrac = acc/totalDur;
+    acc += s.duration;
+    const color = STEP_TYPE_COLOR[s.type];
+    if (i < currentIdx){
+      parts.push({startFrac, lenFrac, color, opacity:1});
+    } else if (i === currentIdx){
+      const doneFrac = Math.min(1, Math.max(0, stepElapsedSeconds / s.duration));
+      if (doneFrac > 0) parts.push({startFrac, lenFrac: lenFrac*doneFrac, color, opacity:1});
+      if (doneFrac < 1) parts.push({startFrac: startFrac + lenFrac*doneFrac, lenFrac: lenFrac*(1-doneFrac), color, opacity:0.22});
+    } else {
+      parts.push({startFrac, lenFrac, color, opacity:0.22});
+    }
+  });
+  const circles = parts.map(p=>{
+    const segLen = p.lenFrac*C;
+    const dasharray = `${segLen.toFixed(2)} ${(C-segLen).toFixed(2)}`;
+    const dashoffset = (-p.startFrac*C).toFixed(2);
+    return `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${p.color}" stroke-width="11" stroke-dasharray="${dasharray}" stroke-dashoffset="${dashoffset}" opacity="${p.opacity}"/>`;
+  }).join('');
+  return `<svg class="ring-svg" viewBox="0 0 120 120">
+    <g transform="rotate(-90 60 60)">${circles}</g>
+  </svg>`;
+}
+
+/* =========================================================================
+   AUDIO + HAPTIC ALERT
+   ========================================================================= */
+let audioCtx = null;
+function beep(freq, dur){
+  try{
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    const t0 = audioCtx.currentTime;
+    const release = Math.min(0.18, dur*0.25);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(0.4, t0 + 0.03);
+    g.gain.setValueAtTime(0.4, Math.max(t0 + 0.03, t0 + dur - release));
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(t0 + dur + 0.03);
+  }catch(e){}
+}
+function countdownBeep(){
+  beep(720, 0.11);
+  if (navigator.vibrate) navigator.vibrate(50);
+}
+function transitionLongBeep(){
+  beep(820, 1.8);
+  if (navigator.vibrate) navigator.vibrate(900);
+}
+function alertFinish(){
+  beep(660, 0.2);
+  setTimeout(()=>beep(880, 0.2), 220);
+  setTimeout(()=>beep(1320, 0.35), 440);
+  if (navigator.vibrate) navigator.vibrate([150,80,150,80,300]);
+}
+
+/* =========================================================================
+   RENDERING — HOME
+   ========================================================================= */
+const app = document.getElementById('app');
+let currentDate = new Date();
+let timerState = null; // {sess, steps, idx, remaining, elapsed, running, choiceKey}
+
+function fmtIncline(v){
+  return (v % 1 === 0 ? v : v.toFixed(1)) + "%";
+}
+function fmtSpeed(v){
+  return (v % 1 === 0 ? v : v.toFixed(1)).toString().replace('.', ',') + " km/h";
+}
+function fmtSpeedShort(v){
+  return (v % 1 === 0 ? v : v.toFixed(1)).toString().replace('.', ',');
+}
+function fmtClock(sec){
+  const m = Math.floor(sec/60), s = Math.floor(sec%60);
+  return String(m).padStart(2,'0') + ":" + String(s).padStart(2,'0');
+}
+
+function daysPill(){
+  return `<div class="stat-pill"><b>J-${daysToCruise()}</b></div>`;
+}
+function daysToCruise(){
+  const cruise = dateFromYMD("2026-08-30");
+  const diff = Math.ceil((cruise - stripTime(currentDate)) / 86400000);
+  return diff > 0 ? diff : 0;
+}
+function stripTime(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+function shortInfoLabel(info){
+  if (info.state === 'session') return {name: info.session.title, kind: info.session.kind};
+  if (info.state === 'choice') return {name: info.stopName, kind: 'choice'};
+  if (info.state === 'rest') return {name: 'Pas de séance', kind: 'rest'};
+  if (info.state === 'after') return {name: 'Programme terminé', kind: 'rest'};
+  return {name: '—', kind: 'rest'};
+}
+function dotColorForKind(kind){
+  if (kind === 'choice') return 'var(--effort)';
+  const meta = KIND_META[kind];
+  return meta ? meta.color : 'var(--neutral)';
+}
+
+function renderUpcoming(fromDate, count){
+  let html = `<div class="upcoming-title">Les prochains jours</div><div class="upcoming-list">`;
+  for (let i=1; i<=count; i++){
+    const d = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate()+i);
+    const info = resolveDay(d);
+    const short = shortInfoLabel(info);
+    const dur = info.state==='session' ? info.session.totalMin+' min' : (info.state==='choice' ? 'au choix' : '');
+    html += `
+      <div class="upcoming-row" data-date="${ymd(d)}">
+        <span class="upcoming-day">${DAY_NAMES[d.getDay()].slice(0,3)} ${d.getDate()}</span>
+        <span class="upcoming-dot" style="background:${dotColorForKind(short.kind)}"></span>
+        <div class="upcoming-info">
+          <div class="upcoming-name">${short.name}</div>
+          ${dur ? `<div class="upcoming-meta">${dur}</div>` : ''}
+        </div>
+        <span class="upcoming-chevron">›</span>
+      </div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function renderStepList(sess){
+  const steps = flattenSession(sess);
+  let html = `<div class="steps-title">Déroulé de la séance</div><div class="card" style="padding:6px 20px;">`;
+  let lastRep = null;
+  steps.forEach(s=>{
+    if (s.repIndex && s.repIndex === lastRep) return; // collapse identical rep rows after first display handled separately
+    lastRep = s.repIndex || null;
+  });
+  // Build a compact representation: collapse repeats into one row with x{reps}
+  const rows = [];
+  sess.segments.forEach(seg=>{
+    if (seg.kind === 'simple'){
+      rows.push({label: seg.label || STEP_TYPE_LABEL[seg.type], type: seg.type, speed: seg.speed, incline: seg.incline, duration: seg.duration});
+    } else if (seg.kind === 'repeat'){
+      seg.steps.forEach(s=>{
+        rows.push({label: (s.label||STEP_TYPE_LABEL[s.type]) + ` × ${seg.reps}`, type:s.type, speed:s.speed, incline:s.incline, duration:s.duration});
+      });
+    }
+  });
+  html += rows.map(r=>`
+    <div class="step-row">
+      <span class="step-dot" style="background:${STEP_TYPE_COLOR[r.type]}"></span>
+      <div class="step-info">
+        <div class="step-label">${r.label}</div>
+        <div class="step-meta">${fmtSpeed(r.speed)} · ${fmtIncline(r.incline)}</div>
+      </div>
+      <div class="step-dur">${Math.round(r.duration/60)} min</div>
+    </div>
+  `).join('');
+  html += `</div>`;
+  return html;
+}
+
+function legendHTML(){
+  const items = [
+    ['warmup','Échauffement'],['effort','Effort'],['recovery','Récupération'],
+    ['steady','Continu'],['technique','Technique']
+  ];
+  return `<div class="profile-legend">` + items.map(([k,l])=>
+    `<span><span class="legend-dot" style="background:${STEP_TYPE_COLOR[k]}"></span>${l}</span>`
+  ).join('') + `</div>`;
+}
+
+function renderHome(previewDate){
+  const isPreview = !!previewDate;
+  const viewDate = previewDate || currentDate;
+  const info = resolveDay(viewDate);
+  let body = '';
+
+  if (info.state === 'before'){
+    body = `
+      <div class="info-screen">
+        <div class="info-icon">🗓️</div>
+        <div class="info-title">Le programme n'a pas encore commencé</div>
+        <div class="info-body">Premier jour : <b>lundi 29 juin 2026</b>. Reviens à cette date pour ta première séance d'intervalles.</div>
+      </div>`;
+  } else if (info.state === 'after'){
+    body = `
+      <div class="info-screen">
+        <div class="info-icon">🏁</div>
+        <div class="info-title">Programme terminé</div>
+        <div class="info-body">La croisière MSC Armonia est finie — bravo pour les 9 semaines de préparation et les 7 soirées à bord.</div>
+      </div>`;
+  } else if (info.state === 'rest'){
+    body = `
+      <div class="info-screen">
+        <div class="info-icon">🌊</div>
+        <div class="info-title">Pas de séance</div>
+        <div class="info-body">${info.reason}</div>
+      </div>`;
+  } else if (info.state === 'choice'){
+    const opts = info.options;
+    body = `
+      <div class="date-block">
+        <div class="date-label">${fmtDate(viewDate)}</div>
+        <div class="session-title">${info.stopName}</div>
+        <div class="session-sub">${info.stopNote}</div>
+        <div class="type-tag tag-rest">${info.block}</div>
+      </div>
+      <div class="steps-title">${isPreview ? 'Deux options possibles' : 'Choisis ta séance de 17h30'}</div>
+    `;
+    opts.forEach(o=>{
+      const meta = KIND_META[o.session.kind];
+      body += `
+        <div class="choice-card ${info.recommended===o.key?'recommended':''}" ${isPreview?'':`data-choice="${o.key}"`} style="${isPreview?'cursor:default;':''}">
+          <div class="choice-head">
+            <span class="choice-name">${o.key === 'standard' ? 'Standard' : 'Variante jambes chargées'}</span>
+            ${info.recommended === o.key ? '<span class="choice-badge">Conseillée</span>' : ''}
+          </div>
+          <div class="choice-meta">${o.session.totalMin} min · ~${o.session.kcal} kcal · ${meta.label}</div>
+        </div>`;
+    });
+  } else if (info.state === 'session'){
+    const sess = info.session;
+    const meta = KIND_META[sess.kind];
+    body = `
+      <div class="date-block">
+        <div class="date-label">${fmtDate(viewDate)}</div>
+        <div class="session-title">${sess.title}</div>
+        <div class="session-sub">${info.block}</div>
+        <div class="type-tag tag-${sess.kind}">${meta.label}</div>
+      </div>
+      <div class="profile-wrap">${profileSVG(sess)}${legendHTML()}</div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-val">${sess.totalMin}<span style="font-size:14px;color:var(--text-faint);"> min</span></div><div class="stat-label">Durée</div></div>
+        <div class="stat"><div class="stat-val">~${sess.kcal}</div><div class="stat-label">Kcal estimées</div></div>
+      </div>
+      ${isPreview ? '' : `<div style="margin-top:16px;"><button class="btn btn-primary" id="startBtn">Démarrer la séance</button></div>`}
+      ${renderStepList(sess)}
+    `;
+  } else {
+    body = `
+      <div class="info-screen">
+        <div class="info-icon">🤔</div>
+        <div class="info-title">Rien de prévu</div>
+        <div class="info-body">Aucune séance définie pour cette date.</div>
+      </div>`;
+  }
+
+  const topHTML = isPreview
+    ? `<div class="preview-banner">Aperçu · ${fmtDate(viewDate)}<button id="backHomeBtn">Aujourd'hui</button></div>`
+    : `<div class="top-row">${daysPill()}</div>`;
+
+  app.innerHTML = `
+    ${topHTML}
+    ${body}
+    ${isPreview ? '' : renderUpcoming(currentDate, 6)}
+  `;
+
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn){
+    startBtn.addEventListener('click', ()=> startSession(info.session));
+  }
+  if (!isPreview){
+    document.querySelectorAll('.choice-card').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const key = el.getAttribute('data-choice');
+        const opt = info.options.find(o=>o.key===key);
+        startSession(opt.session);
+      });
+    });
+  }
+  const backBtn = document.getElementById('backHomeBtn');
+  if (backBtn){
+    backBtn.addEventListener('click', ()=> renderHome());
+  }
+  document.querySelectorAll('.upcoming-row').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      renderHome(dateFromYMD(el.getAttribute('data-date')));
+    });
+  });
+}
+
+/* =========================================================================
+   TIMER LOGIC
+   ========================================================================= */
+let timerInterval = null;
+
+function showQuitConfirm(){
+  timerState.running = false;
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `
+    <div class="confirm-box">
+      <p>Quitter la séance en cours ?</p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="cancelQuit">Annuler</button>
+        <button class="btn" id="confirmQuit" style="background:var(--danger); color:#2A0F0C;">Quitter</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  document.getElementById('cancelQuit').addEventListener('click', ()=>{
+    overlay.remove();
+    timerState.running = true;
+  });
+  document.getElementById('confirmQuit').addEventListener('click', ()=>{
+    overlay.remove();
+    clearInterval(timerInterval);
+    timerState = null;
+    renderHome();
+  });
+}
+
+function startSession(sess){
+  const steps = flattenSession(sess);
+  timerState = {
+    sess, steps, idx: 0,
+    remaining: steps[0].duration,
+    elapsed: 0,
+    stepElapsed: 0,
+    totalDuration: steps.reduce((a,s)=>a+s.duration,0),
+    running: true,
+  };
+  renderTimer();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function tick(){
+  if (!timerState || !timerState.running) return;
+  timerState.remaining -= 1;
+  timerState.elapsed += 1;
+  timerState.stepElapsed += 1;
+
+  if (timerState.remaining >= 1 && timerState.remaining <= 5){
+    countdownBeep();
+  }
+
+  if (timerState.remaining <= 0){
+    const isLast = timerState.idx >= timerState.steps.length - 1;
+    if (isLast){
+      clearInterval(timerInterval);
+      alertFinish();
+      renderSummary();
+      return;
+    } else {
+      timerState.idx += 1;
+      timerState.remaining = timerState.steps[timerState.idx].duration;
+      timerState.stepElapsed = 0;
+      transitionLongBeep();
+      renderTimer(true);
+      return;
+    }
+  }
+  renderTimer();
+}
+
+function renderTimer(flash){
+  const {sess, steps, idx, remaining, elapsed, stepElapsed, totalDuration, running} = timerState;
+  const step = steps[idx];
+  const nextStep = steps[idx+1];
+  const color = STEP_TYPE_COLOR[step.type];
+  const countdownActive = remaining >= 1 && remaining <= 5;
+  const splashActive = stepElapsed < 5;
+
+  let bodyHTML;
+  if (countdownActive){
+    const upcomingColor = nextStep ? STEP_TYPE_COLOR[nextStep.type] : 'var(--effort)';
+    const upcomingLabel = nextStep ? STEP_TYPE_LABEL[nextStep.type] : 'Fin';
+    bodyHTML = `
+      <div class="countdown-circle" style="background:${upcomingColor};">
+        <span class="cd-number">${remaining}</span>
+        <span class="cd-label">${upcomingLabel}</span>
+      </div>`;
+  } else if (splashActive){
+    bodyHTML = `
+      <div class="splash-incline">
+        <div class="splash-value">${fmtIncline(step.incline)}</div>
+        <div class="splash-label">${STEP_TYPE_LABEL[step.type]}</div>
+      </div>`;
+  } else {
+    bodyHTML = `
+      ${step.repIndex ? `<div class="rep-counter">Répétition ${step.repIndex} / ${step.repTotal}</div>` : ''}
+      <div class="now-next-row">
+        <div class="nn-col now" style="--nn-color:${color}">
+          <div class="nn-label">Now</div>
+          <div class="nn-value">${fmtIncline(step.incline)}</div>
+        </div>
+        <div class="nn-col next">
+          <div class="nn-label">Next</div>
+          <div class="nn-value">${nextStep ? fmtIncline(nextStep.incline) : '—'}</div>
+        </div>
+      </div>
+      <div class="big-clock" style="color:${color}">${fmtClock(remaining)}</div>
+    `;
+  }
+
+  app.innerHTML = `
+    <div class="timer-screen ${flash?'flash':''}" style="--flash-color:${color}">
+      <div class="timer-top">
+        <div class="timer-close" id="closeBtn">✕</div>
+      </div>
+      <div class="elapsed-clock-wrap"><div class="elapsed-clock">-${fmtClock(totalDuration - elapsed)}</div></div>
+      <div class="ring-wrap">
+        <div class="ring-inner">
+          ${ringSVG(sess, idx, stepElapsed)}
+          <div class="ring-speed">
+            <div class="rs-val">${fmtSpeedShort(step.speed)}</div>
+            <div class="rs-unit">KMH</div>
+          </div>
+        </div>
+      </div>
+      <div class="timer-body">${bodyHTML}</div>
+      <div class="timer-controls">
+        <button class="btn btn-secondary" id="pauseBtn">${running ? 'Pause' : 'Reprendre'}</button>
+        <button class="btn btn-ghost" id="skipBtn">Étape suivante</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('closeBtn').addEventListener('click', showQuitConfirm);
+  document.getElementById('pauseBtn').addEventListener('click', ()=>{
+    timerState.running = !timerState.running;
+    renderTimer();
+  });
+  document.getElementById('skipBtn').addEventListener('click', ()=>{
+    timerState.remaining = 1;
+    if (timerState.running) tick(); else { timerState.running = true; tick(); }
+  });
+}
+
+function renderSummary(){
+  const {sess, elapsed} = timerState;
+  app.innerHTML = `
+    <div class="summary-screen">
+      <div class="summary-emoji">🎉</div>
+      <div class="summary-title">Séance terminée</div>
+      <div class="summary-sub">${sess.title}</div>
+      <div class="summary-stats">
+        <div class="summary-stat"><div class="stat-val">${fmtClock(elapsed)}</div><div class="stat-label">Durée</div></div>
+        <div class="summary-stat"><div class="stat-val">~${sess.kcal}</div><div class="stat-label">Kcal</div></div>
+      </div>
+      <button class="btn btn-primary" id="doneBtn" style="max-width:280px; margin-top:26px;">Retour à l'accueil</button>
+    </div>
+  `;
+  document.getElementById('doneBtn').addEventListener('click', ()=>{
+    timerState = null;
+    renderHome();
+  });
+}
+
+renderHome();
+</script>
+</body>
+</html>
