@@ -129,7 +129,7 @@ body{
 .step-info{flex:1;}
 .step-label{font-size:14px; font-weight:500;}
 .step-meta{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); margin-top:2px;}
-.step-dur{font-family:var(--font-mono); font-size:13px; color:var(--text-faint);}
+.step-dur{font-family:var(--font-mono); font-weight:600; font-size:14px; color:var(--text);}
 
 /* ---------- choice buttons (cruise) ---------- */
 .choice-card{
@@ -232,7 +232,7 @@ body{
 .upcoming-dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
 .upcoming-info{flex:1; min-width:0;}
 .upcoming-name{font-size:14px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.upcoming-meta{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:1px;}
+.upcoming-meta{font-family:var(--font-mono); font-weight:600; font-size:13px; color:var(--text); margin-top:1px;}
 .upcoming-chevron{color:var(--text-faint); font-size:14px;}
 .day-nav{
   display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:14px;
@@ -348,22 +348,22 @@ const b1_continu_s3 = session("Continu 7%", 'steady', 40, [
   simple(30, 5.2, 7, 'steady', 'Allure constante'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b1_technique = session("Technique légère", 'technique', 28, [
+const b1_technique = session("Technique légère", 'technique', 30, [
   simple(5, 4, 0, 'warmup'),
   simple(20, 4, 4, 'technique', 'Technique — jambes qui tournent'),
-  simple(3, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 2 : Intensification (13 juillet -> 9 août) ----
-const b2_intervalles_45 = session("Intervalles 12% / 5%", 'effort', 52, [
+const b2_intervalles_45 = session("Intervalles 12% / 5%", 'effort', 50, [
   simple(5, 4.5, 0, 'warmup'),
   repeat(8, effortStep(3, 5, 12), recoveryStep(2, 5, 5)),
-  simple(7, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
-const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 57, [
+const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 55, [
   simple(5, 4.5, 0, 'warmup'),
   repeat(9, effortStep(3, 5, 12), recoveryStep(2, 5, 5)),
-  simple(7, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 const b2_continu_45 = session("Continu 8%", 'steady', 50, [
   simple(5, 4.5, 0, 'warmup'),
@@ -375,10 +375,10 @@ const b2_continu_67 = session("Continu 8%", 'steady', 55, [
   simple(45, 5, 8, 'steady', 'Allure constante et soutenue'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b2_technique = session("Technique légère", 'technique', 29, [
+const b2_technique = session("Technique légère", 'technique', 30, [
   simple(5, 4, 0, 'warmup'),
   simple(20, 4, 4, 'technique', 'Technique — confortable'),
-  simple(4, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 
 // ---- Semaine de décharge (3 -> 9 août), avant le Bloc 3 ----
@@ -394,15 +394,15 @@ const deload_continu = session("Continu décharge 6%", 'steady', 35, [
 ]);
 
 // ---- Bloc 3 : Pic (10 août -> 23 août) ----
-const b3_intervalles_s8 = session("Intervalles 15% / 5%", 'effort', 52, [
+const b3_intervalles_s8 = session("Intervalles 15% / 5%", 'effort', 50, [
   simple(5, 5, 0, 'warmup'),
   repeat(8, effortStep(3, 5, 15), recoveryStep(2, 5, 5)),
-  simple(7, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
-const b3_intervalles_s9 = session("Intervalles 15% / 5%", 'effort', 57, [
+const b3_intervalles_s9 = session("Intervalles 15% / 5%", 'effort', 55, [
   simple(5, 5, 0, 'warmup'),
   repeat(9, effortStep(3, 5, 15), recoveryStep(2, 5, 5)),
-  simple(7, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 const b3_continu_s8 = session("Continu 9%", 'steady', 50, [
   simple(5, 5, 0, 'warmup'),
@@ -414,10 +414,10 @@ const b3_continu_s9 = session("Continu 10%", 'steady', 50, [
   simple(40, 5, 10, 'steady', 'Point culminant du programme'),
   simple(5, 4, 0, 'cooldown'),
 ]);
-const b3_technique = session("Technique légère", 'technique', 29, [
+const b3_technique = session("Technique légère", 'technique', 30, [
   simple(5, 4, 0, 'warmup'),
   simple(20, 4, 4, 'technique', 'Technique — confortable'),
-  simple(4, 4, 0, 'cooldown'),
+  simple(5, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 4 : Pré-croisière (24 -> 29 août), séances fixes par date ----
