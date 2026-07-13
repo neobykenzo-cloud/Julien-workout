@@ -189,22 +189,21 @@ body{
   font-family:var(--font-mono); font-weight:700; font-size:min(18vw, 106px); line-height:1;
   letter-spacing:-0.02em; font-variant-numeric: tabular-nums; margin-top:16px;
 }
-.now-next-row{display:flex; align-items:flex-end; gap:min(9vw,36px);}
+.now-next-row{display:flex; align-items:flex-end; gap:min(5vw,22px);}
 .nn-col{text-align:left;}
 .nn-label{
-  font-family:var(--font-mono); font-size:min(3.6vw,13px); letter-spacing:0.14em; color:var(--text-faint);
+  font-family:var(--font-mono); font-size:min(6.5vw,26px); font-weight:700; letter-spacing:0.04em;
   text-transform:uppercase; margin-bottom:4px;
 }
-.nn-col.now .nn-label{
-  font-size:min(6.5vw,26px); font-weight:700; letter-spacing:0.04em; color:var(--nn-color, var(--text));
-}
-.nn-sub{display:flex; align-items:baseline; gap:5px;}
-.nn-value{font-family:var(--font-mono); font-weight:700; line-height:1; letter-spacing:-0.07em;}
-.nn-sep{font-family:var(--font-mono); font-weight:700; line-height:1; opacity:0.4;}
-.nn-col.now .nn-value, .nn-col.now .nn-sep{color: var(--nn-color, var(--text)); font-size:min(19vw, 82px);}
-.nn-col.now .nn-kmh{font-family:var(--font-mono); font-size:min(3.5vw,14px); color:var(--nn-color, var(--text)); letter-spacing:0.08em; text-transform:uppercase;}
-.nn-col.next .nn-value, .nn-col.next .nn-sep{color:var(--text-dim); opacity:0.75; font-size:min(10vw, 38px);}
-.nn-col.next .nn-kmh{font-family:var(--font-mono); font-size:min(2.6vw,10px); color:var(--text-dim); opacity:0.75; letter-spacing:0.08em; text-transform:uppercase;}
+.nn-col.now .nn-label{ color: var(--nn-color, var(--text)); }
+.nn-col.next .nn-label{ color: var(--text-dim); opacity:0.75; }
+.nn-sub{display:flex; align-items:baseline; gap:4px;}
+.nn-value{font-family:var(--font-mono); font-weight:700; line-height:1; letter-spacing:-0.07em; font-size:min(13vw, 52px);}
+.nn-sep{font-family:var(--font-mono); font-weight:700; line-height:1; opacity:0.4; font-size:min(13vw, 52px);}
+.nn-col.now .nn-value, .nn-col.now .nn-sep{color: var(--nn-color, var(--text));}
+.nn-col.now .nn-kmh{font-family:var(--font-mono); font-size:min(2.8vw,11px); color:var(--nn-color, var(--text)); letter-spacing:0.06em; text-transform:uppercase;}
+.nn-col.next .nn-value, .nn-col.next .nn-sep{color:var(--text-dim); opacity:0.75;}
+.nn-col.next .nn-kmh{font-family:var(--font-mono); font-size:min(2.8vw,11px); color:var(--text-dim); opacity:0.75; letter-spacing:0.06em; text-transform:uppercase;}
 
 .preview-line{display:flex; align-items:baseline; gap:6px; margin-top:16px;}
 .preview-num{font-family:var(--font-mono); font-weight:700; font-size:min(19vw,82px); color:#fff; line-height:1; letter-spacing:-0.07em;}
