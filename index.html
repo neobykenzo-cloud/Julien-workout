@@ -176,8 +176,8 @@ body{
 }
 
 .next-kicker{
-  font-family:var(--font-mono); font-weight:700; font-size:min(18vw,106px); color:var(--text);
-  text-transform:uppercase; letter-spacing:0.02em; text-align:center; margin:16px 0 0; line-height:1;
+  font-family:var(--font-mono); font-weight:700; font-size:min(5.5vw,22px); color:var(--text-dim);
+  text-transform:uppercase; letter-spacing:0.14em; text-align:center; margin:20px 0 0; line-height:1;
 }
 .phase-name{
   font-family:var(--font-mono); font-weight:700; font-size:min(12vw,46px);
@@ -205,9 +205,10 @@ body{
 .nn-col.next .nn-value, .nn-col.next .nn-sep{color:var(--text-dim); opacity:0.75;}
 .nn-col.next .nn-kmh{font-family:var(--font-mono); font-size:min(2.8vw,11px); color:var(--text-dim); opacity:0.75; letter-spacing:0.06em; text-transform:uppercase;}
 
-.preview-line{display:flex; align-items:baseline; gap:6px; margin-top:16px;}
-.preview-num{font-family:var(--font-mono); font-weight:700; font-size:min(19vw,82px); color:#fff; line-height:1; letter-spacing:-0.07em;}
-.preview-sep{font-family:var(--font-mono); font-weight:700; font-size:min(19vw,82px); color:#fff; opacity:0.4; line-height:1;}
+.preview-line{display:flex; align-items:baseline; gap:8px; margin-top:20px;}
+.preview-num{font-family:var(--font-mono); font-weight:700; font-size:min(30vw,140px); color:#fff; line-height:1; letter-spacing:-0.05em;}
+.preview-sep{font-family:var(--font-mono); font-weight:700; font-size:min(30vw,140px); color:#fff; opacity:0.35; line-height:1;}
+.preview-speed{font-family:var(--font-mono); font-weight:700; font-size:min(11vw,44px); color:#fff; opacity:0.85; line-height:1; letter-spacing:-0.05em;}
 .preview-kmh{font-family:var(--font-mono); font-size:min(3.5vw,14px); color:#fff; letter-spacing:0.08em; text-transform:uppercase;}
 
 /* ---------- confirm overlay ---------- */
@@ -253,8 +254,15 @@ body{
   padding:5px 14px; font-family:var(--font-body); font-size:12px; cursor:pointer;
 }
 
-.timer-controls{padding:20px 24px 30px; display:flex; gap:12px;}
-.timer-controls .btn{padding:20px;}
+.timer-controls{padding:20px 24px 34px; display:flex; gap:18px; justify-content:center; align-items:center;}
+.icon-btn{
+  width:60px; height:60px; border-radius:50%; border:1px solid var(--line); background:var(--surface);
+  color:var(--text); display:flex; align-items:center; justify-content:center; font-size:24px; cursor:pointer;
+}
+.icon-btn:active{background:var(--surface-2);}
+.icon-btn.play{
+  width:74px; height:74px; background:var(--effort); color:#0A0A0C; border:none; font-size:28px;
+}
 
 /* ---------- summary ---------- */
 .summary-screen{
@@ -277,6 +285,12 @@ body{
 /* =========================================================================
    PROGRAMME TAPIS — CROISIÈRE 2026
    ========================================================================= */
+
+/* ---------- uniform transport-control icons (own vector art, not emoji) ---------- */
+const ICON_REWIND = `<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="20,6 20,18 12,12"/><polygon points="12,6 12,18 4,12"/></svg>`;
+const ICON_FORWARD = `<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="4,6 4,18 12,12"/><polygon points="12,6 12,18 20,12"/></svg>`;
+const ICON_PLAY = `<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><polygon points="7,5 7,19 19,12"/></svg>`;
+const ICON_PAUSE = `<svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><rect x="6" y="5" width="4.5" height="14" rx="1.2"/><rect x="13.5" y="5" width="4.5" height="14" rx="1.2"/></svg>`;
 
 const DAY_NAMES = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
 const MONTH_NAMES = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
@@ -325,7 +339,7 @@ const STEP_TYPE_COLOR = {
 const STEP_TYPE_LABEL = {
   warmup:'Échauffement', cooldown:'Retour au calme',
   effort:'Effort', recovery:'Récup',
-  steady:'Allure constante', technique:'Technique'
+  steady:'Continu', technique:'Technique'
 };
 
 /* =========================================================================
@@ -340,12 +354,12 @@ const b1_intervalles = session("Intervalles 10% / 5%", 'effort', 50, [
 ]);
 const b1_continu_s2 = session("Continu 6%", 'steady', 35, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(25, 5.2, 6, 'steady', 'Allure constante'),
+  simple(25, 5.2, 6, 'steady', 'Continu'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 const b1_continu_s3 = session("Continu 7%", 'steady', 40, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(30, 5.2, 7, 'steady', 'Allure constante'),
+  simple(30, 5.2, 7, 'steady', 'Continu'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 const b1_technique = session("Technique légère", 'technique', 30, [
@@ -367,12 +381,12 @@ const b2_intervalles_67 = session("Intervalles 12% / 5%", 'effort', 55, [
 ]);
 const b2_continu_45 = session("Continu 8%", 'steady', 50, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(40, 5, 8, 'steady', 'Allure constante et soutenue'),
+  simple(40, 5, 8, 'steady', 'Continu soutenu'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 const b2_continu_67 = session("Continu 8%", 'steady', 55, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(45, 5, 8, 'steady', 'Allure constante et soutenue'),
+  simple(45, 5, 8, 'steady', 'Continu soutenu'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 const b2_technique = session("Technique légère", 'technique', 30, [
@@ -623,7 +637,7 @@ function profileSVG(sess, opts){
    RING PROGRESS — whole-session donut, fills in as time elapses,
    wraps around the session countdown clock
    ========================================================================= */
-function ringSVG(sess, currentIdx, stepElapsedSeconds){
+function ringSVG(sess, currentIdx, stepElapsedSeconds, elapsedFraction){
   const steps = flattenSession(sess);
   const totalDur = steps.reduce((a,s)=>a+s.duration,0);
   const R = 44, C = 2*Math.PI*R;
@@ -650,8 +664,17 @@ function ringSVG(sess, currentIdx, stepElapsedSeconds){
     const dashoffset = (-p.startFrac*C).toFixed(2);
     return `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${p.color}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${dasharray}" stroke-dashoffset="${dashoffset}" opacity="${p.opacity}"/>`;
   }).join('');
+  const ticks = [0.25, 0.5, 0.75].map(frac=>{
+    const angle = frac * 2 * Math.PI;
+    const rInner = R - 8, rOuter = R + 8;
+    const x1 = 60 + rInner*Math.cos(angle), y1 = 60 + rInner*Math.sin(angle);
+    const x2 = 60 + rOuter*Math.cos(angle), y2 = 60 + rOuter*Math.sin(angle);
+    const passed = (elapsedFraction || 0) >= frac;
+    const stroke = passed ? '#ffffff' : 'rgba(255,255,255,0.28)';
+    return `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${stroke}" stroke-width="2.5" stroke-linecap="round"/>`;
+  }).join('');
   return `<svg class="ring-svg" viewBox="0 0 120 120">
-    <g transform="rotate(-90 60 60)">${circles}</g>
+    <g transform="rotate(-90 60 60)">${circles}${ticks}</g>
   </svg>`;
 }
 
@@ -989,6 +1012,52 @@ function showQuitConfirm(){
   });
 }
 
+function showStepConfirm(direction){
+  timerState.running = false;
+  const overlay = document.createElement('div');
+  overlay.className = 'confirm-overlay';
+  overlay.innerHTML = `
+    <div class="confirm-box">
+      <p>Es-tu sûr de changer d'étape ?</p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" id="confirmStepChange">Oui</button>
+        <button class="btn" id="quitFromStep" style="background:var(--danger); color:#0A0A0C;">Quitter</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', (e)=>{
+    if (e.target === overlay){
+      overlay.remove();
+      timerState.running = true;
+    }
+  });
+  document.getElementById('confirmStepChange').addEventListener('click', ()=>{
+    overlay.remove();
+    if (direction === 'forward') doAdvanceStep(); else doRewindStep();
+  });
+  document.getElementById('quitFromStep').addEventListener('click', ()=>{
+    overlay.remove();
+    clearInterval(timerInterval);
+    timerState = null;
+    renderHome();
+  });
+}
+
+function doAdvanceStep(){
+  timerState.running = true;
+  timerState.remaining = 1;
+  tick();
+}
+
+function doRewindStep(){
+  if (timerState.idx > 0) timerState.idx -= 1;
+  timerState.remaining = timerState.steps[timerState.idx].duration;
+  timerState.stepElapsed = 0;
+  timerState.running = true;
+  transitionLongBeep();
+  renderTimer(true);
+}
+
 function startSession(sess){
   const steps = flattenSession(sess);
   timerState = {
@@ -1045,11 +1114,12 @@ function renderTimer(flash){
   const color = STEP_TYPE_COLOR[step.type];
   const countdownActive = remaining >= 1 && remaining <= 5;
   const countdownToEnd = sessionRemainingSeconds(steps, idx, remaining);
+  const elapsedFraction = totalDuration > 0 ? Math.max(0, Math.min(1, (totalDuration - countdownToEnd) / totalDuration)) : 0;
   const curLabel = step.repIndex
     ? `${STEP_TYPE_LABEL[step.type]} ${step.repIndex}/${step.repTotal}`
     : STEP_TYPE_LABEL[step.type];
 
-  let kickerHTML, bodyHTML;
+  let kickerHTML, bodyHTML, ringHTML;
 
   if (countdownActive){
     const upcoming = nextStep;
@@ -1057,18 +1127,26 @@ function renderTimer(flash){
     const upcomingLabel = upcoming
       ? (upcoming.repIndex ? `${STEP_TYPE_LABEL[upcoming.type]} ${upcoming.repIndex}/${upcoming.repTotal}` : STEP_TYPE_LABEL[upcoming.type])
       : 'Fin de séance';
-    kickerHTML = `<div class="next-kicker">Next</div>`;
+    ringHTML = '';
+    kickerHTML = `<div class="next-kicker">Coming next</div>`;
     bodyHTML = `
       <div class="phase-name" style="color:${upcomingColor}; margin-top:0;">${upcomingLabel}</div>
       ${upcoming ? `
       <div class="preview-line">
         <span class="preview-num">${fmtIncline(upcoming.incline)}</span>
         <span class="preview-sep">|</span>
-        <span class="preview-num">${fmtSpeedShort(upcoming.speed)}</span>
+        <span class="preview-speed">${fmtSpeedShort(upcoming.speed)}</span>
         <span class="preview-kmh">KMH</span>
       </div>` : ''}
     `;
   } else {
+    ringHTML = `
+      <div class="ring-wrap">
+        <div class="ring-inner">
+          ${ringSVG(sess, idx, stepElapsed, elapsedFraction)}
+          <div class="ring-clock">${fmtClock(countdownToEnd)}</div>
+        </div>
+      </div>`;
     kickerHTML = `<div class="phase-name" style="color:${color};">${curLabel}</div>`;
     bodyHTML = `
       <div class="now-next-row">
@@ -1098,17 +1176,13 @@ function renderTimer(flash){
       <div class="timer-top">
         <div class="timer-close" id="closeBtn">✕</div>
       </div>
-      <div class="ring-wrap">
-        <div class="ring-inner">
-          ${ringSVG(sess, idx, stepElapsed)}
-          <div class="ring-clock">${fmtClock(countdownToEnd)}</div>
-        </div>
-      </div>
+      ${ringHTML}
       ${kickerHTML}
       <div class="timer-body">${bodyHTML}</div>
       <div class="timer-controls">
-        <button class="btn btn-secondary" id="pauseBtn">${running ? 'Pause' : 'Reprendre'}</button>
-        <button class="btn btn-ghost" id="skipBtn">Étape suivante</button>
+        <button class="icon-btn" id="rewindBtn">${ICON_REWIND}</button>
+        <button class="icon-btn play" id="pauseBtn">${running ? ICON_PAUSE : ICON_PLAY}</button>
+        <button class="icon-btn" id="skipBtn">${ICON_FORWARD}</button>
       </div>
     </div>
   `;
@@ -1118,10 +1192,8 @@ function renderTimer(flash){
     timerState.running = !timerState.running;
     renderTimer();
   });
-  document.getElementById('skipBtn').addEventListener('click', ()=>{
-    timerState.remaining = 1;
-    if (timerState.running) tick(); else { timerState.running = true; tick(); }
-  });
+  document.getElementById('skipBtn').addEventListener('click', ()=> showStepConfirm('forward'));
+  document.getElementById('rewindBtn').addEventListener('click', ()=> showStepConfirm('backward'));
 }
 
 function renderSummary(){
