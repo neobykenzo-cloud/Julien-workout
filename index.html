@@ -434,6 +434,13 @@ const b3_technique = session("Technique légère", 'technique', 30, [
   simple(5, 4, 0, 'cooldown'),
 ]);
 
+// ---- Séance spéciale ponctuelle : compensation izakaya (23 août) ----
+const izakaya_special = session("Compensation izakaya", 'effort', 62, [
+  simple(5, 4, 0, 'warmup'),
+  repeat(8, effortStep(4.5, 5, 10), recoveryStep(2, 5, 5)),
+  simple(5, 4, 0, 'cooldown'),
+]);
+
 // ---- Bloc 4 : Pré-croisière (24 -> 29 août), séances fixes par date ----
 const b4_decharge_jeu = session("Décharge légère", 'technique', 20, [
   simple(5, 4.5, 0, 'warmup'),
@@ -571,6 +578,11 @@ function resolveDay(date){
     if (dow === SUNDAY) return {state:'session', block: blockLabel(2), session: b2_technique};
     if (INTERVAL_DAYS.includes(dow)) return {state:'session', block: blockLabel(2), session: isSem67 ? b2_intervalles_67 : b2_intervalles_45};
     if (CONTINU_DAYS.includes(dow)) return {state:'session', block: blockLabel(2), session: isSem67 ? b2_continu_67 : b2_continu_45};
+  }
+
+  // Séance spéciale ponctuelle : 23 août, à la place du dimanche technique
+  if (t === "2026-08-23"){
+    return {state:'session', block: "Séance spéciale · compensation soirée", session: izakaya_special};
   }
 
   // Bloc 3 : 10 août -> 23 août
