@@ -451,14 +451,14 @@ const b4_decharge_jeu = session("Décharge légère", 'technique', 26, [
 // ---- Croisière MSC Armonia (30 août -> 6 sept) ----
 const cruise_standard = session("Standard croisière", 'effort', 45, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(18, 5, 8, 'steady', 'Allure de croisière'),
-  simple(12, 5, 11, 'effort', 'Pic — brûler davantage'),
-  simple(5, 5, 8, 'steady', 'Retour allure modérée'),
+  simple(20, 5, 6, 'steady', 'Allure de croisière'),
+  simple(10, 5, 7, 'effort', 'Pic — brûler davantage'),
+  simple(5, 5, 6, 'steady', 'Retour allure modérée'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 const cruise_variante = session("Variante jambes chargées", 'technique', 45, [
   simple(5, 4, 0, 'warmup', 'Échauffement doux'),
-  simple(35, 5, 6, 'technique', 'Allure légère — récupération active'),
+  simple(35, 5, 4, 'technique', 'Allure légère — récupération active'),
   simple(5, 4, 0, 'cooldown'),
 ]);
 
