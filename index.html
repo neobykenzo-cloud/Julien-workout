@@ -460,7 +460,7 @@ const cruise_session = session("Séance croisière (20 min)", 'effort', 20, [
    ========================================================================= */
 
 const PROGRAM_START = "2026-06-29";
-const PROGRAM_END   = "2026-11-02";
+const PROGRAM_END   = "2026-11-08";
 
 // weekday groups
 const INTERVAL_DAYS = [1,3,5];   // lun/mer/ven
@@ -471,18 +471,18 @@ function blockLabel(n){
   return ["Bloc 1 · Construction","Bloc 2 · Intensification","Bloc 3 · Pic","Bloc 4 · Pré-croisière","Croisière MSC Armonia"][n-1];
 }
 
-// ---- Reprise post-croisière : 8 septembre -> 2 novembre, plafond 12% (jamais 15%) ----
-const POSTCRUISE_START = "2026-09-08";
-const POSTCRUISE_END   = "2026-11-02";
+// ---- Reprise post-croisière : 14 septembre -> 8 novembre, plafond 12% (jamais 15%) ----
+const POSTCRUISE_START = "2026-09-14";
+const POSTCRUISE_END   = "2026-11-08";
 const POSTCRUISE_WEEKS = [
-  {start:"2026-09-08", level:'level1'},
-  {start:"2026-09-15", level:'level2'},
-  {start:"2026-09-22", level:'level2'},
-  {start:"2026-09-29", level:'deload'},
-  {start:"2026-10-06", level:'level1'},
-  {start:"2026-10-13", level:'level2'},
-  {start:"2026-10-20", level:'deload'},
-  {start:"2026-10-27", level:'level2'},
+  {start:"2026-09-14", level:'level1'},
+  {start:"2026-09-21", level:'level2'},
+  {start:"2026-09-28", level:'level2'},
+  {start:"2026-10-05", level:'deload'},
+  {start:"2026-10-12", level:'level1'},
+  {start:"2026-10-19", level:'level2'},
+  {start:"2026-10-26", level:'deload'},
+  {start:"2026-11-02", level:'level2'},
 ];
 const POSTCRUISE_LABELS = {
   level1:  "Reprise post-croisière · 12%",
@@ -579,12 +579,12 @@ function resolveDay(date){
     if (CONTINU_DAYS.includes(dow)) return {state:'session', block: blockLabel(3), session: isSem9 ? b3_continu_s9 : b3_continu_s8};
   }
 
-  // Repos avant reprise (7 septembre) — trop fatigué après la croisière
-  if (t === "2026-09-07"){
-    return {state:'rest', block: "Reprise post-croisière", reason: "Repos — tu reprends demain, profite d'une journée de récupération après la croisière."};
+  // Repos avant reprise (7 -> 13 septembre) — reprise prévue lundi 14
+  if (inRange(date, "2026-09-07", "2026-09-13")){
+    return {state:'rest', block: "Reprise post-croisière", reason: "Pas de séance — reprise prévue lundi 14 septembre."};
   }
 
-  // Reprise post-croisière : 8 septembre -> 2 novembre, plafond 12% (jamais 15%)
+  // Reprise post-croisière : 14 septembre -> 8 novembre, plafond 12% (jamais 15%)
   if (inRange(date, POSTCRUISE_START, POSTCRUISE_END)){
     const level = postCruiseWeekLevel(t);
     if (level){
