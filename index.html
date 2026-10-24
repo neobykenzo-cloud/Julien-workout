@@ -369,42 +369,42 @@ const b1_technique = session("Technique légère", 'technique', 30, [
 ]);
 
 // ---- Bloc 2 : Intensification (13 juillet -> 9 août) ----
-const b2_intervalles_45 = session("Intervalles 9% / 5%", 'effort', 40, [
+const b2_intervalles_45 = session("Intervalles 9% / 5%", 'effort', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  repeat(6, effortStep(3, 5, 9), recoveryStep(2, 5, 5)),
-  simple(5, 4, 0, 'cooldown'),
+  repeat(7, effortStep(3, 5, 9), recoveryStep(2, 5, 5)),
+  simple(2, 4, 0, 'cooldown'),
 ]);
-const b2_intervalles_67 = session("Intervalles 10% / 5%", 'effort', 40, [
+const b2_intervalles_67 = session("Intervalles 10% / 5%", 'effort', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  repeat(6, effortStep(3, 5, 10), recoveryStep(2, 5, 5)),
-  simple(5, 4, 0, 'cooldown'),
+  repeat(7, effortStep(3, 5, 10), recoveryStep(2, 5, 5)),
+  simple(2, 4, 0, 'cooldown'),
 ]);
-const b2_continu_45 = session("Continu 8%", 'steady', 40, [
+const b2_continu_45 = session("Continu 8%", 'steady', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(30, 5, 8, 'steady', 'Continu soutenu'),
-  simple(5, 4, 0, 'cooldown'),
+  simple(35, 5, 8, 'steady', 'Continu soutenu'),
+  simple(2, 4, 0, 'cooldown'),
 ]);
-const b2_continu_67 = session("Continu 10%", 'steady', 40, [
+const b2_continu_67 = session("Continu 10%", 'steady', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(30, 5, 10, 'steady', 'Continu soutenu'),
-  simple(5, 4, 0, 'cooldown'),
+  simple(35, 5, 10, 'steady', 'Continu soutenu'),
+  simple(2, 4, 0, 'cooldown'),
 ]);
 const b2_technique = session("Technique légère", 'technique', 30, [
   simple(5, 4, 0, 'warmup'),
-  simple(20, 4, 4, 'technique', 'Technique — confortable'),
-  simple(5, 4, 0, 'cooldown'),
+  simple(23, 4, 4, 'technique', 'Technique — confortable'),
+  simple(2, 4, 0, 'cooldown'),
 ]);
 
 // ---- Semaine de décharge (3 -> 9 août), avant le Bloc 3 ----
-const deload_intervalles = session("Intervalles décharge 8% / 4%", 'effort', 35, [
+const deload_intervalles = session("Intervalles décharge 8% / 4%", 'effort', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  repeat(5, effortStep(3, 5, 8), recoveryStep(2, 5, 4)),
-  simple(5, 4, 0, 'cooldown'),
+  repeat(7, effortStep(3, 5, 8), recoveryStep(2, 5, 4)),
+  simple(2, 4, 0, 'cooldown'),
 ]);
-const deload_continu = session("Continu décharge 6%", 'steady', 35, [
+const deload_continu = session("Continu décharge 6%", 'steady', 42, [
   simple(5, 4.5, 0, 'warmup'),
-  simple(25, 5, 6, 'steady', 'Allure tranquille'),
-  simple(5, 4, 0, 'cooldown'),
+  simple(35, 5, 6, 'steady', 'Allure tranquille'),
+  simple(2, 4, 0, 'cooldown'),
 ]);
 
 // ---- Bloc 3 : Pic (10 août -> 23 août) ----
@@ -471,7 +471,7 @@ function blockLabel(n){
   return ["Bloc 1 · Construction","Bloc 2 · Intensification","Bloc 3 · Pic","Bloc 4 · Pré-croisière","Croisière MSC Armonia"][n-1];
 }
 
-// ---- Reprise post-croisière : 14 septembre -> 12 novembre, 40 min, plafond 10% ----
+// ---- Reprise post-croisière : 14 septembre -> 12 novembre, 42 min, plafond 10% ----
 const POSTCRUISE_START = "2026-09-14";
 const POSTCRUISE_END   = "2026-11-12";
 const POSTCRUISE_WEEKS = [
@@ -486,8 +486,8 @@ const POSTCRUISE_WEEKS = [
   {start:"2026-11-09", level:'level1'},
 ];
 const POSTCRUISE_LABELS = {
-  level1:  "Reprise · 40 min · max 10%",
-  level2:  "Reprise · 40 min · max 10%",
+  level1:  "Reprise · 42 min · max 10%",
+  level2:  "Reprise · 42 min · max 10%",
   deload:  "Reprise post-croisière · Décharge",
 };
 function postCruiseWeekLevel(dateStr){
@@ -585,7 +585,7 @@ function resolveDay(date){
     return {state:'rest', block: "Reprise post-croisière", reason: "Pas de séance — reprise prévue lundi 14 septembre."};
   }
 
-  // Reprise post-croisière : 14 septembre -> 12 novembre, 40 min, plafond 10%
+  // Reprise post-croisière : 14 septembre -> 12 novembre, 42 min, plafond 10%
   if (inRange(date, POSTCRUISE_START, POSTCRUISE_END)){
     const level = postCruiseWeekLevel(t);
     if (level){
