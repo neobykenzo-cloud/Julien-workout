@@ -369,19 +369,19 @@ const b1_technique = session("Technique légère", 'technique', 30, [
 ]);
 
 // ---- Bloc 2 : Intensification (13 juillet -> 9 août) ----
-const b2_intervalles_45 = session("Intervalles 9% / 5%", 'effort', 35, [
+const b2_intervalles_45 = session("Intervalles 12% / 6%", 'effort', 35, [
   simple(3, 4.5, 0, 'warmup'),
-  repeat(6, effortStep(3, 5, 9), recoveryStep(2, 5, 5)),
+  repeat(6, effortStep(3, 5, 12), recoveryStep(2, 5, 6)),
   simple(2, 4, 0, 'cooldown'),
 ]);
-const b2_intervalles_67 = session("Intervalles 10% / 5%", 'effort', 35, [
+const b2_intervalles_67 = session("Intervalles 12% / 6%", 'effort', 35, [
   simple(3, 4.5, 0, 'warmup'),
-  repeat(6, effortStep(3, 5, 10), recoveryStep(2, 5, 5)),
+  repeat(6, effortStep(3, 5, 12), recoveryStep(2, 5, 6)),
   simple(2, 4, 0, 'cooldown'),
 ]);
-const b2_continu_45 = session("Continu 8%", 'steady', 35, [
+const b2_continu_45 = session("Continu 10%", 'steady', 35, [
   simple(3, 4.5, 0, 'warmup'),
-  simple(30, 5, 8, 'steady', 'Continu soutenu'),
+  simple(30, 5, 10, 'steady', 'Continu soutenu'),
   simple(2, 4, 0, 'cooldown'),
 ]);
 const b2_continu_67 = session("Continu 10%", 'steady', 35, [
@@ -460,7 +460,7 @@ const cruise_session = session("Séance croisière (20 min)", 'effort', 20, [
    ========================================================================= */
 
 const PROGRAM_START = "2026-06-29";
-const PROGRAM_END   = "2026-11-12";
+const PROGRAM_END   = "2026-11-30";
 
 // weekday groups
 const INTERVAL_DAYS = [1,3,5];   // lun/mer/ven
@@ -471,9 +471,9 @@ function blockLabel(n){
   return ["Bloc 1 · Construction","Bloc 2 · Intensification","Bloc 3 · Pic","Bloc 4 · Pré-croisière","Croisière MSC Armonia"][n-1];
 }
 
-// ---- Reprise post-croisière : 14 septembre -> 12 novembre, 35 min, plafond 10% ----
+// ---- Reprise post-croisière : 14 septembre -> 30 novembre, 35 min, intervalles 12%/6%, continu 10% ----
 const POSTCRUISE_START = "2026-09-14";
-const POSTCRUISE_END   = "2026-11-12";
+const POSTCRUISE_END   = "2026-11-30";
 const POSTCRUISE_WEEKS = [
   {start:"2026-09-14", level:'level1'},
   {start:"2026-09-21", level:'level2'},
@@ -483,12 +483,15 @@ const POSTCRUISE_WEEKS = [
   {start:"2026-10-19", level:'level2'},
   {start:"2026-10-26", level:'deload'},
   {start:"2026-11-02", level:'level2'},
-  {start:"2026-11-09", level:'level1'},
+  {start:"2026-11-09", level:'level2'},
+  {start:"2026-11-16", level:'deload'},
+  {start:"2026-11-23", level:'level2'},
+  {start:"2026-11-30", level:'deload'},
 ];
 const POSTCRUISE_LABELS = {
-  level1:  "Reprise · 35 min · max 10%",
-  level2:  "Reprise · 35 min · max 10%",
-  deload:  "Reprise post-croisière · Décharge",
+  level1:  "Semaine dure · 35 min",
+  level2:  "Semaine dure · 35 min",
+  deload:  "Semaine tranquille · 35 min",
 };
 function postCruiseWeekLevel(dateStr){
   let level = null;
@@ -585,7 +588,7 @@ function resolveDay(date){
     return {state:'rest', block: "Reprise post-croisière", reason: "Pas de séance — reprise prévue lundi 14 septembre."};
   }
 
-  // Reprise post-croisière : 14 septembre -> 12 novembre, 35 min, plafond 10%
+  // Reprise post-croisière : 14 septembre -> 30 novembre, 35 min, intervalles 12%/6%, continu 10%
   if (inRange(date, POSTCRUISE_START, POSTCRUISE_END)){
     const level = postCruiseWeekLevel(t);
     if (level){
